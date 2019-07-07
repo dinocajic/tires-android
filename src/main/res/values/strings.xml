@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tires</string>
 
-    <!-- Main Activity -->
+    <!-- Main Activity ######################################################################### -->
     <string name="logo">Main Photo</string>
     <string name="search_button">Search</string>
     <string name="search_text">i.e. 245/35R20</string>
@@ -9,4 +9,44 @@
     <string name="mt_banner">Mickey Thompson Banner</string>
     <string name="add_button">Add</string>
     <string name="modify_button">Modify</string>
+
+    <!-- Add/Edit Activity ##################################################################### -->
+    <string name="add_new_tire_logo">Add New Tire</string>
+    <string name="edit_tires_logo">Edit Tire</string>
+
+    <string-array name="brands_dropdown">
+        <item>BFGoodrich</item>
+        <item>Delinte</item>
+        <item>Hankook</item>
+        <item>Michelin</item>
+        <item>Mickey Thompson</item>
+        <item>Nitto</item>
+        <item>Toyo</item>
+    </string-array>
+
+    <string-array name="models_dropdown">
+        <item>Select Brand First</item>
+    </string-array>
+
+    <string name="part_number">Part Number</string>
+    <string name="model">Model</string>
+    <string name="width">Width</string>
+    <string name="construction">Constr.</string>
+    <string name="wheel_diameter">Wheel Diam.</string>
+    <string name="max_load">Max Load</string>
+    <string name="max_psi">Max PSI</string>
+    <string name="ply">Ply Amount</string>
+    <string name="load_rating">Load Rating</string>
+    <string name="speed_rating">Speed Rating</string>
+    <string name="weight">Weight</string>
+    <string name="cost">Cost</string>
+    <string name="sales_price">Sales Price</string>
+    <string name="qty_per_unit">Qty/Unit</string>
+    <string name="has_warranty">Warranty?</string>
+    <string name="dot_approved">DOT Appr?</string>
+    <string name="is_discontinued">Disco?</string>
+    <string name="upload_image">Add Image from Gallery…</string>
+    <string name="modify_image">Modify Image…</string>
+    <string name="add_to_database">Add to Database</string>
+    <string name="modify_in_db">Modify Tire Entry</string>
 </resources>
