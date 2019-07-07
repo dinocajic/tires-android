@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Tires</string>
+
+    <!-- Main Activity -->
+    <string name="logo">Main Photo</string>
+    <string name="search_button">Search</string>
+    <string name="search_text">i.e. 245/35R20</string>
+    <string name="help_button">\?</string>
+    <string name="mt_banner">Mickey Thompson Banner</string>
+    <string name="add_button">Add</string>
+    <string name="modify_button">Modify</string>
 </resources>
