@@ -68,4 +68,7 @@
         in egestas erat imperdiet. Diam maecenas sed enim ut. Tellus id interdum velit laoreet id.
         Purus non enim praesent elementum facilisis leo vel fringilla est.
     </string>
+
+    <!-- Search Activity ####################################################################### -->
+    <string name="search_logo">Search Logo</string>
 </resources>
