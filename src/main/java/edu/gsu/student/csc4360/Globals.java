@@ -4,5 +4,5 @@ import android.app.Application;
 
 public class Globals extends Application {
 
-    public DatabaseHelper db;
+    public static DatabaseHelper db;
 }
