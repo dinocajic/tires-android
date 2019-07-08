@@ -13,9 +13,6 @@ import android.widget.Button;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // Needed to access the DatabaseHelper class
-    private Globals globals;
-
     private Button  add, modify, search, help;
 
     @Override
@@ -33,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void init() {
         // Starts the database class
-        this.globals    = (Globals) getApplicationContext();
-        this.globals.db = new DatabaseHelper(this);
+        Globals.db = new DatabaseHelper(this);
 
         // @todo populate the database here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
