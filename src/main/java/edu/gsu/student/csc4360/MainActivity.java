@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         // @todo populate the database here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        this.add        = findViewById(R.id.addButton) ;
-        this.modify     = findViewById(R.id.modifyButton);
-        this.search     = findViewById(R.id.searchButton);
-        this.help       = findViewById(R.id.helpButton);
+        this.add        = findViewById(R.id.mainAddButton) ;
+        this.modify     = findViewById(R.id.mainModifyButton);
+        this.search     = findViewById(R.id.mainSearchButton);
+        this.help       = findViewById(R.id.mainHelpButton);
 
         // Opens the Add new items page
         this.add.setOnClickListener( new View.OnClickListener() {

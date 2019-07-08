@@ -39,7 +39,7 @@
                 android:text="@string/search_text" />
 
             <Button
-                android:id="@+id/searchButton"
+                android:id="@+id/mainSearchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
@@ -51,7 +51,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/helpButton"
+                android:id="@+id/mainHelpButton"
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -86,7 +86,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/addButton"
+                android:id="@+id/mainAddButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -100,7 +100,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/modifyButton"
+                android:id="@+id/mainModifyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
