@@ -328,7 +328,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/modifyButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

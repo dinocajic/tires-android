@@ -328,16 +328,30 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/modifyButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="1dp"
                 android:layout_weight="1"
                 android:background="#4E4E4E"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/modify_in_db"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="#4E4E4E"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/delete_tire_entry"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
