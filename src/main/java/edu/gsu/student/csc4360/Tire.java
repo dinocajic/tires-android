@@ -5,7 +5,7 @@ public class Tire {
     private String brand, model, part_number, width, construction, wheel_diameter, max_load, max_psi,
                   ply, load_rating, speed_rating, weight, cost, sales_price, cost_per_unit, image;
 
-    private int has_warranty, is_dot_approved, is_discontinued;
+    private boolean has_warranty, is_dot_approved, is_discontinued;
 
     public String getBrand() {
         return brand;
@@ -71,23 +71,31 @@ public class Tire {
         return image;
     }
 
-    public int getHas_warranty() {
+    public boolean getHas_warranty() {
         return has_warranty;
     }
 
-    public int getIs_dot_approved() {
+    public boolean getIs_dot_approved() {
         return is_dot_approved;
     }
 
-    public int getIs_discontinued() {
+    public boolean getIs_discontinued() {
         return is_discontinued;
     }
 
+    // todo change all setters from void to boolean
+    //      - return true if successful, and false if not successful
+    //      ----------------------------------------------------------------------------------------
+
     public void setBrand(String brand) {
+        // todo get brands from Globals.db.getBrands() and verify that the brand actually exists
+        //      inside the returned array
         this.brand = brand;
     }
 
     public void setModel(String model) {
+        // todo get models from Globals.db.getBrands() and verify that the model actually exists
+        //      inside the returned array
         this.model = model;
     }
 
@@ -139,7 +147,7 @@ public class Tire {
         this.sales_price = sales_price;
     }
 
-    public void setCost_per_unit(String cost_per_unit) {
+    public void setQty_per_unit(String cost_per_unit) {
         this.cost_per_unit = cost_per_unit;
     }
 
@@ -147,15 +155,15 @@ public class Tire {
         this.image = image;
     }
 
-    public void setHas_warranty(int has_warranty) {
+    public void setHas_warranty(boolean has_warranty) {
         this.has_warranty = has_warranty;
     }
 
-    public void setIs_dot_approved(int is_dot_approved) {
+    public void setIs_dot_approved(boolean is_dot_approved) {
         this.is_dot_approved = is_dot_approved;
     }
 
-    public void setIs_discontinued(int is_discontinued) {
+    public void setIs_discontinued(boolean is_discontinued) {
         this.is_discontinued = is_discontinued;
     }
 }
