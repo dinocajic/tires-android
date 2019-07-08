@@ -7,29 +7,41 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * @todo need to prepopulate some tires into the database when the application is launched
+ * @todo need to process search
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private DatabaseHelper db;
+    // Needed to access the DatabaseHelper class
+    private Globals globals;
 
-    private Button add, modify, search, help;
+    private Button  add, modify, search, help;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.db = new DatabaseHelper(this);
         this.init();
     }
 
     /**
-     * Initializes the buttons and sets their onClick listeners
+     * Initializes the database and tables.
+     * Pre-populates the tables with content.
+     * Initializes the buttons and sets their onClick listeners.
      */
     private void init() {
-        this.add    = findViewById(R.id.addButton) ;
-        this.modify = findViewById(R.id.modifyButton);
-        this.search = findViewById(R.id.searchButton);
-        this.help   = findViewById(R.id.helpButton);
+        // Starts the database class
+        this.globals    = (Globals) getApplicationContext();
+        this.globals.db = new DatabaseHelper(this);
+
+        // @todo populate the database here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        this.add        = findViewById(R.id.addButton) ;
+        this.modify     = findViewById(R.id.modifyButton);
+        this.search     = findViewById(R.id.searchButton);
+        this.help       = findViewById(R.id.helpButton);
 
         // Opens the Add new items page
         this.add.setOnClickListener( new View.OnClickListener() {
