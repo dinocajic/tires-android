@@ -64,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         private static final String COL_MODEL_ID     = "model_id";
         private static final String COL_WIDTH        = "section_width";
         private static final String COL_RIM_DIAM     = "rim_diam";
+        private static final String COL_ASPECT_RATIO = "aspect_ratio";
         private static final String COL_CONSTR       = "construction";
         private static final String COL_MAX_LOAD     = "max_load";
         private static final String COL_MAX_PSI      = "max_psi";
@@ -109,8 +110,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
-        SQLiteDatabase db = this.getWritableDatabase();
 
+        // To be able to see the database in Device Helper/data/database
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -195,6 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         TiresTable.COL_BRAND_ID     + " integer, " +
                         TiresTable.COL_MODEL_ID     + " integer, " +
                         TiresTable.COL_WIDTH        + " text, "    +
+                        TiresTable.COL_ASPECT_RATIO + " text, "    +
                         TiresTable.COL_RIM_DIAM     + " text, "    +
                         TiresTable.COL_CONSTR       + " text, "    +
                         TiresTable.COL_MAX_LOAD     + " text, "    +
@@ -265,4 +268,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         onCreate(sqLiteDatabase);
     }
+
+    // todo insert( Tire tire ) - inserts the tire object into the database
+    public void insert(Tire tire) {
+
+    }
+
+    // todo getBrands() - return String[] brands from brands table
+    // todo getModels() - return String[] models from models table
+    // todo getProducts( String searchParam ) - return list of products that match the search param
+    //      + searchParam will be something like 245/45R20:
+    //      + 245 = section_width | 45 = aspect_ratio | R = construction | 20 = wheel_diameter
+    // todo deleteProduct( int product_id ) - deletes the product from the database. Just set enabled = 0
+    // todo modifyProduct( Tire tire, int id ) - modify product details with the specific id
 }
