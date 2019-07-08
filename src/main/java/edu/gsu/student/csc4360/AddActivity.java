@@ -20,6 +20,8 @@ public class AddActivity extends AppCompatActivity {
 
     private Button   upload_image, add_button;
 
+    private Tire     tire;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +60,39 @@ public class AddActivity extends AppCompatActivity {
         this.upload_image    = findViewById( R.id.upload_image );
         this.add_button      = findViewById( R.id.add_button );
 
+        // todo Need to add on click listeners to most items so that the insides would clear if they match
+        // todo certain text and then if empty need to re-add the tip-text
+
         this.add_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // todo insert into database
+
+                tire = new Tire();
+                tire.setBrand( brands_dropdown.getSelectedItem().toString() );
+                tire.setModel( models_dropdown.getSelectedItem().toString() );
+                tire.setWidth( width.getText().toString() );
+                tire.setPart_number( part_number.getText().toString() );
+                tire.setConstruction( construction.getText().toString() );
+                tire.setWheel_diameter( wheel_diameter.getText().toString() );
+                tire.setMax_load( max_load.getText().toString() );
+                tire.setMax_psi( max_psi.getText().toString() );
+                tire.setPly( ply.getText().toString() );
+                tire.setLoad_rating( load_rating.getText().toString() );
+                tire.setSpeed_rating( speed_rating.getText().toString() );
+                tire.setWeight( weight.getText().toString() );
+                tire.setCost( cost.getText().toString() );
+                tire.setSales_price( sales_price.getText().toString() );
+                tire.setQty_per_unit( qty_per_unit.getText().toString() );
+                tire.setHas_warranty( has_warranty.isChecked() );
+                tire.setIs_dot_approved( is_dot_approved.isChecked() );
+                tire.setIs_discontinued( is_disco.isChecked() );
+
+                // todo need to add the ability to add photo to drawabale and move photo name
+                // todo not sure if the bottom portion is correct
+                tire.setImage( upload_image.getText().toString() );
+
+                // Inserts the tire into the database
+                Globals.db.insert( tire );
             }
         });
     }
