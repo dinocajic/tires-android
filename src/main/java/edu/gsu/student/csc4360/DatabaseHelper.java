@@ -269,16 +269,195 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    // todo insert( Tire tire ) - inserts the tire object into the database
+    // todo Missing CreatedDate, and RemovedDate from TireModel
+    // todo brand and model need models so they can use ID
+    // todo Missing cost and image in database
     public void insert(Tire tire) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("INSERT INTO " + TiresTable.TABLE +
+                " (" +
+                TiresTable.PART_NUM + ", " +
+                TiresTable.COL_BRAND_ID + ", " +
+                TiresTable.COL_MODEL_ID + ", " +
+                TiresTable.COL_WIDTH + ", " +
+                TiresTable.COL_RIM_DIAM + ", " +
+                TiresTable.COL_ASPECT_RATIO + ", " +
+                TiresTable.COL_CONSTR + ", " +
+                TiresTable.COL_MAX_LOAD + ", " +
+                TiresTable.COL_MAX_PSI + ", " +
+                TiresTable.COL_PLY + ", " +
+                TiresTable.COL_LOAD_RT + ", " +
+                TiresTable.COL_SPEED_RT + ", " +
+                TiresTable.COL_IS_DOT_APPR + ", " +
+                TiresTable.COL_WEIGHT + ", " +
+                TiresTable.COL_HAS_WARRANTY + ", " +
+                TiresTable.COL_IS_DISCO + ", " +
+                TiresTable.COL_CREATED_DATE + ", " +
+                TiresTable.COL_REMOVED_DATE + ", " +
+                ") VALUES (" +
+                "'" + tire.getPart_number() + "', " +
+                tire.getBrand() + ", " + //brand_id
+                tire.getModel() + ", " + //mode_id
+                "'" + tire.getWidth() + "', " +
+                "'" + tire.getWheel_diameter() + "', " +
+                "'" + tire.getAspect_Ratio() + "', " +
+                "'" + tire.getConstruction() + "', " +
+                "'" + tire.getMax_load() + "', " +
+                "'" + tire.getMax_psi() + "', " +
+                "'" + tire.getPly() + "', " +
+                "'" + tire.getLoad_rating() + "', " +
+                "'" + tire.getSpeed_rating() + "', " +
+                tire.getIs_dot_approved() + ", " +
+                "'" + tire.getWeight() + "', " +
+                tire.getHas_warranty() + ", " +
+                tire.getIs_discontinued() + ", " +
+                //Missing Created Date
+                //Missing Removed Date
+                ");"
+        );
 
     }
 
-    // todo getBrands() - return String[] brands from brands table
-    // todo getModels() - return String[] models from models table
-    // todo getProducts( String searchParam ) - return list of products that match the search param
-    //      + searchParam will be something like 245/45R20:
-    //      + 245 = section_width | 45 = aspect_ratio | R = construction | 20 = wheel_diameter
-    // todo deleteProduct( int product_id ) - deletes the product from the database. Just set enabled = 0
-    // todo modifyProduct( Tire tire, int id ) - modify product details with the specific id
-}
+    // todo Missing CreatedDate, and RemovedDate from TireModel
+    // todo brand and model need models so they can use ID
+    // todo Missing cost and image in database
+    public void modifyProduct(Tire tire, int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TiresTable.TABLE +
+                " SET (" +
+                TiresTable.PART_NUM + ", " +
+                TiresTable.COL_BRAND_ID + ", " +
+                TiresTable.COL_MODEL_ID + ", " +
+                TiresTable.COL_WIDTH + ", " +
+                TiresTable.COL_RIM_DIAM + ", " +
+                TiresTable.COL_ASPECT_RATIO + ", " +
+                TiresTable.COL_CONSTR + ", " +
+                TiresTable.COL_MAX_LOAD + ", " +
+                TiresTable.COL_MAX_PSI + ", " +
+                TiresTable.COL_PLY + ", " +
+                TiresTable.COL_LOAD_RT + ", " +
+                TiresTable.COL_SPEED_RT + ", " +
+                TiresTable.COL_IS_DOT_APPR + ", " +
+                TiresTable.COL_WEIGHT + ", " +
+                TiresTable.COL_HAS_WARRANTY + ", " +
+                TiresTable.COL_IS_DISCO + ", " +
+                TiresTable.COL_CREATED_DATE + ", " +
+                TiresTable.COL_REMOVED_DATE + ", " +
+                ") = (" +
+                "'" + tire.getPart_number() + "', " +
+                tire.getBrand() + ", " + //brand_id
+                tire.getModel() + ", " + //mode_id
+                "'" + tire.getWidth() + "', " +
+                "'" + tire.getWheel_diameter() + "', " +
+                "'" + tire.getAspect_Ratio() + "', " +
+                "'" + tire.getConstruction() + "', " +
+                "'" + tire.getMax_load() + "', " +
+                "'" + tire.getMax_psi() + "', " +
+                "'" + tire.getPly() + "', " +
+                "'" + tire.getLoad_rating() + "', " +
+                "'" + tire.getSpeed_rating() + "', " +
+                tire.getIs_dot_approved() + ", " +
+                "'" + tire.getWeight() + "', " +
+                tire.getHas_warranty() + ", " +
+                tire.getIs_discontinued() + ", " +
+                //Missing Created Date
+                //Missing Removed Date
+                ") WHERE " + TiresTable.COL_ID + " = " + id + ";"
+        );
+    }
+
+    public void delete(int product_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TiresTable.TABLE + " WHERE " + TiresTable.COL_ID + " = " + product_id + ";");
+    }
+
+    // todo This function should probably return an array of Brands instead of Strings
+    public String[] getBrands() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor queryCursor = db.rawQuery("SELECT * FROM " + BrandsTable.TABLE + ";", null);
+
+        String[] brands = new String[queryCursor.getCount()];
+        int i = 0;
+
+        queryCursor.moveToFirst();
+        while (!queryCursor.isAfterLast()) {
+            String name = queryCursor.getString(queryCursor.getColumnIndex(BrandsTable.COL_NAME));
+            brands[i] = name;
+            i++;
+            queryCursor.moveToNext();
+        }
+
+        return brands;
+    }
+
+    // todo This function should probably return an array of Models instead of Strings
+    public String[] getModels() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor queryCursor = db.rawQuery("SELECT * FROM " + ModelsTable.TABLE + ";", null);
+
+        String[] models = new String[queryCursor.getCount()];
+        int i = 0;
+
+        queryCursor.moveToFirst();
+        while (!queryCursor.isAfterLast()) {
+            String name = queryCursor.getString(queryCursor.getColumnIndex(ModelsTable.COL_NAME));
+            models[i] = name;
+            i++;
+            queryCursor.moveToNext();
+        }
+
+        return models;
+    }
+
+    // todo add sql join for brand and model and add brand/model to tire
+    // todo Cost, Image, Sales, Quantity have no database column
+    public Tire[] getProducts(String searchParam) {
+        String[] parameters = searchParam.split("/|R");
+        if (parameters.length != 3) {
+            return Tire[];
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor queryCursor = db.rawQuery("SELECT * FROM " + TiresTable.TABLE + " WHERE " +
+                TiresTable.COL_WIDTH + " = " + parameters[0] + " AND " +
+                TiresTable.COL_ASPECT_RATIO + " = " + parameters[1] + " AND " +
+                TiresTable.COL_RIM_DIAM + " = " + parameters[2], null);
+
+        Tire[] tires = new Tire[queryCursor.getCount()];
+        int i = 0;
+
+        queryCursor.moveToFirst();
+        while (!queryCursor.isAfterLast()) {
+            Tire tire = new Tire();
+
+            //tire.setBrand();
+            //tire.setModel();
+
+            tire.setPart_number(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.PART_NUM)));
+            tire.setWidth(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_WIDTH)));
+            tire.setConstruction(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_CONSTR)));
+            tire.setWheel_diameter(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_RIM_DIAM)));
+            tire.setAspect_ratio(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_ASPECT_RATIO)));
+            tire.setMax_load(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_MAX_LOAD)));;
+            tire.setMax_psi(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_MAX_PSI)));
+            tire.setLoad_rating(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_LOAD_RT)));
+            tire.setSpeed_rating(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_SPEED_RT)));
+            tire.setWeight(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_WEIGHT)));
+
+            tire.setHas_warranty(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_HAS_WARRANTY)) != 0);
+            tire.setIs_dot_approved(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DOT_APPR)) != 0);
+            tire.setIs_discontinued(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DISCO)) != 0);
+
+            //tire.setSales_price();
+            //tire.setQty_per_unit();
+            //tire.setImage();
+            //tire.setCost();
+
+            tires[i] = tire;
+            i++;
+
+            queryCursor.moveToNext();
+        }
+
+        return tires;
+    }
