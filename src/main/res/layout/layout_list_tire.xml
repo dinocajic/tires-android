@@ -1,64 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent_layout">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/tire_image"
+        android:layout_width="146dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:src="@drawable/tire_mickey_thompson_atz_p3" />
+
+    <TextView
+        android:id="@+id/tire_part_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginEnd="10dp"
+        android:layout_toRightOf="@+id/tire_image"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
 
-        <ImageView
-            android:id="@+id/tire_image"
-            android:layout_width="146dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:src="@drawable/tire_mickey_thompson_atz_p3" />
+    <TextView
+        android:id="@+id/tire_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_toRightOf="@+id/tire_image"
+        android:layout_below="@+id/tire_part_number"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/tire_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_toRightOf="@+id/tire_image"
+        android:layout_below="@+id/tire_brand"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tire_part_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Part #: 90000001946"
-                android:textColor="#FDFDFD"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tire_brand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Mickey Thompson"
-                android:textColor="#FDFDFD"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tire_model"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="ATZ P3"
-                android:textColor="#FDFDFD"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tire_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="305/55R20"
-                android:textColor="#FDFDFD"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tire_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_toRightOf="@+id/tire_image"
+        android:layout_below="@+id/tire_model"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>

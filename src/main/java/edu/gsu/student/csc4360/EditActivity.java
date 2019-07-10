@@ -8,6 +8,9 @@ import android.widget.Spinner;
 
 public class EditActivity extends AppCompatActivity {
 
+    // Retrieved from TireRecyclerViewAdapter
+    private String part_number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
