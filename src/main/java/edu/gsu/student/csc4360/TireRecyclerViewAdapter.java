@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,14 +23,15 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_tire, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.brand.setText( tires.get(position).getBrand() );
         holder.model.setText( tires.get(position).getModel() );
         holder.part_number.setText( tires.get(position).getPart_number() );
@@ -56,9 +58,7 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
         return tires.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView       brand;
         TextView       model;
         TextView       size;
