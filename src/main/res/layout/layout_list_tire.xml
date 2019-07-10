@@ -8,8 +8,7 @@
         android:id="@+id/tire_image"
         android:layout_width="146dp"
         android:layout_height="150dp"
-        android:layout_weight="1"
-        android:src="@drawable/tire_mickey_thompson_atz_p3" />
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tire_part_number"

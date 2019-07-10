@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,8 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
                 context.startActivity(intent);
             }
         });
+
+        holder.image.setImageResource( R.drawable.tire_mickey_thompson_atz_p3 );
     }
 
     @Override
@@ -63,6 +66,7 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
         TextView       model;
         TextView       size;
         TextView       part_number;
+        ImageView      image;
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
@@ -71,6 +75,7 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
             model        = itemView.findViewById(R.id.tire_model);
             size         = itemView.findViewById(R.id.tire_size);
             part_number  = itemView.findViewById(R.id.tire_part_number);
+            image        = itemView.findViewById(R.id.tire_image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
