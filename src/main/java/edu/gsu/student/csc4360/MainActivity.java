@@ -3,9 +3,12 @@ package edu.gsu.student.csc4360;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * @todo need to prepopulate some tires into the database when the application is launched
@@ -13,7 +16,9 @@ import android.widget.Button;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private Button  add, modify, search, help;
+    private Button    add, search, help;
+    private ImageView banner;
+    private String    banner_uri = "http://mickeythompsontires.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         // @todo populate the database here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         this.add        = findViewById(R.id.mainAddButton) ;
-        this.modify     = findViewById(R.id.mainModifyButton);
         this.search     = findViewById(R.id.mainSearchButton);
         this.help       = findViewById(R.id.mainHelpButton);
+        this.banner     = findViewById(R.id.mickeyThompsonBanner);
 
         // Opens the Add new items page
         this.add.setOnClickListener( new View.OnClickListener() {
@@ -45,15 +50,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent addIntent = new Intent( MainActivity.this, AddActivity.class );
                 startActivity( addIntent );
-            }
-        });
-
-        // Opens the Edit page
-        this.modify.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent modifyIntent = new Intent( MainActivity.this, EditActivity.class );
-                startActivity( modifyIntent );
             }
         });
 
@@ -65,6 +61,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity( helpIntent );
             }
         });
+
+        this.banner.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if ( !Connectivity.isOnline() ) {
+                    Toast.makeText(getApplicationContext(), "Internet Not Available", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Uri uri = Uri.parse( banner_uri );
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        } ) ;
 
         // Processes the search
         // @todo needs to be modified to actually process the search
