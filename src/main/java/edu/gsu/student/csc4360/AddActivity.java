@@ -16,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+/**
+ * Adds the tire to the database
+ */
 public class AddActivity extends AppCompatActivity {
 
     private Spinner  brands_dropdown, models_dropdown;
@@ -86,10 +89,22 @@ public class AddActivity extends AppCompatActivity {
                 }
 
                 //TODO need to first populate the DropDowns with brands and models before doing the checks
-                //tire.setBrand( brands_dropdown.getSelectedItem().toString() );
-                //tire.setModel( models_dropdown.getSelectedItem().toString() );
 
                 tire = new Tire();
+
+                if ( !tire.setBrand( brands_dropdown.getSelectedItem().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Brand must be selected from the dropdown",
+                            Toast.LENGTH_LONG ).show();
+                    return;
+                }
+
+                if ( !tire.setModel( models_dropdown.getSelectedItem().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Model must be selected from the dropdown",
+                            Toast.LENGTH_LONG ).show();
+                    return;
+                }
 
                 if ( !tire.setPart_number( part_number.getText().toString() ) ) {
                     Toast.makeText( getApplicationContext(),
@@ -195,8 +210,7 @@ public class AddActivity extends AppCompatActivity {
 
                 tire.setImage( imageUri.toString() );
 
-                // TODO Inserts the tire into the database
-                //      Globals.db.insert( tire );
+                // TODO Inserts the tire into the database: Globals.db.insert( tire );
 
                 Toast.makeText(getApplicationContext(), "Tire added successfully", Toast.LENGTH_SHORT).show();
             }
