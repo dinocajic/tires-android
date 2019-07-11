@@ -41,7 +41,20 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        //Log.e("Part Number: ", imported_part_number);
+        // Get the part number that was passed from Search (TireRecyclerViewAdapter)
+        this.imported_part_number = "";
+
+        if ( savedInstanceState == null ) {
+            Bundle extras = getIntent().getExtras();
+
+            if( extras == null ) {
+                this.imported_part_number = "";
+            } else {
+                this.imported_part_number = extras.getString("part_number");
+            }
+        } else {
+            imported_part_number = (String) savedInstanceState.getSerializable("part_number");
+        }
 
         this.init();
         this.createBrandsSpinner();
@@ -74,6 +87,8 @@ public class EditActivity extends AppCompatActivity {
 
         // TODO once the content is retrieved, set oldUri as the URI in the table.
         this.imageUri        = null;
+
+        // TODO populate the fields with the content that was retrieved.
 
         // Calls the method to close the keyboard when the user presses the Return Key
         this.closeKeyboardHelper( this.part_number, this.width, this.aspect_ratio, this.construction,
