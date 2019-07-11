@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -40,6 +41,8 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         this.init();
+        this.createBrandsSpinner();
+        this.createModelsSpinner();
     }
 
     private void init() {
@@ -239,7 +242,42 @@ public class AddActivity extends AppCompatActivity {
                     Log.e("Image", "Not ok");
                 }
         }
+    }
 
+    /**
+     * Creates the Brands Dropdown menu
+     * TODO Change brands_dropdown to accept the data retrieved from the table
+     */
+    private void createBrandsSpinner() {
+        Spinner brands_spinner = findViewById(R.id.brands_dropdown);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.brands_dropdown, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        brands_spinner.setAdapter(adapter);
+    }
+
+    /**
+     * Creates the Models Dropdown menu
+     * TODO Change models_dropdown to accept the data retrieved from the table
+     */
+    private void createModelsSpinner() {
+        Spinner models_spinner = findViewById(R.id.models_dropdown);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.models_dropdown, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        models_spinner.setAdapter(adapter);
     }
 
     /**
