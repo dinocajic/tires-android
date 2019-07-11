@@ -69,9 +69,13 @@ public class AddActivity extends AppCompatActivity {
         this.add_button      = findViewById( R.id.add_button );
         this.imageUri        = null;
 
-        // TODO Maybe add on-click listeners to each EditText so that once the user presses enter,
-        //      the keyboard will close. Use closeKeyboard() method below
+        // Calls the method to close the keyboard when the user presses the Return Key
+        this.closeKeyboardHelper( this.part_number, this.width, this.aspect_ratio, this.construction,
+                this.wheel_diameter, this.max_load, this.max_psi, this.ply, this.load_rating, this.speed_rating,
+                this.weight, this.cost, this.sales_price, this.qty_per_unit );
 
+        // Opens the File Explorer window when the user clicks on the Upload Image button
+        // onActivityResult() method takes care of grabbing the content
         this.upload_image.setOnClickListener( new View.OnClickListener() {
 
             @Override
@@ -82,6 +86,8 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        // Checks to make sure everything is correct before inserting the data into the Tire object
+        // and submitting it to the database.
         this.add_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,8 +96,6 @@ public class AddActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                //TODO need to first populate the DropDowns with brands and models before doing the checks
 
                 tire = new Tire();
 
@@ -211,7 +215,13 @@ public class AddActivity extends AppCompatActivity {
                 tire.setIs_dot_approved( is_dot_approved.isChecked() );
                 tire.setIs_discontinued( is_disco.isChecked() );
 
-                tire.setImage( imageUri.toString() );
+                // Image URI is retrieved in the onActivityResult() method
+                if ( !tire.setImage( imageUri.toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Please select a valid image, i.e. .jpg, .png",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
 
                 // TODO Inserts the tire into the database: Globals.db.insert( tire );
 
@@ -283,6 +293,18 @@ public class AddActivity extends AppCompatActivity {
     /**
      * Closes the keyboard after completion. The user can press return to minimize the keyboard.
      */
+    private void closeKeyboardHelper( EditText... editText ) {
+        for ( EditText eText : editText ) {
+            eText.setOnClickListener( new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    closeKeyboard();
+                }
+            } );
+        }
+    }
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
