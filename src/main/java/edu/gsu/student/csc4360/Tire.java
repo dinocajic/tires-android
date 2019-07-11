@@ -1,9 +1,12 @@
 package edu.gsu.student.csc4360;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Tire {
 
-    private String brand, model, part_number, width, construction, wheel_diameter, max_load, max_psi,
+    private String brand, model, part_number, width, aspect_ratio, construction, wheel_diameter, max_load, max_psi,
                   ply, load_rating, speed_rating, weight, cost, sales_price, cost_per_unit, image;
 
     private boolean has_warranty, is_dot_approved, is_discontinued;
@@ -23,6 +26,8 @@ public class Tire {
     public String getWidth() {
         return width;
     }
+
+    public String getAspect_ratio() { return aspect_ratio; }
 
     public String getConstruction() {
         return construction;
@@ -84,8 +89,8 @@ public class Tire {
         return is_discontinued;
     }
 
-    The following methods I have not touched and some hurt my heard: setMax_PSI,setWheel_diameter,setImage,setModel,setBrand
-       ----------------------------------------------------------------------------------------
+    //The following methods I have not touched and some hurt my heard: setMax_PSI,setWheel_diameter,setImage,setModel,setBrand
+    //   ----------------------------------------------------------------------------------------
     //The following methods I did not touch : setMax_PSI,setWheel_diameter,setImage,setModel,setBrand
     public void setBrand(String brand) {
         // todo get brands from Globals.db.getBrands() and verify that the brand actually exists
@@ -103,16 +108,15 @@ public class Tire {
         // todo validate code.
         try {
             int pn = Integer.parseInt(part_number);
-            if ((pn.length()>0) && (pn.length()<=20)) {
+            if ((pn > 0) && (pn <= 20)) {
                 this.part_number = part_number;
                 return true;
             } else {
                 return false;
             }
-        catch(numberFormatException e){
+        } catch(NumberFormatException e){
                 return false;
             }
-        }
     }
 
     public boolean setWidth(String width) {
@@ -121,16 +125,20 @@ public class Tire {
 
         try {
             int w = Integer.parseInt(width);
-            if (p > 0 && ((width.length()==2)||(width.length()==3))) {
+            if (w > 0 && ((width.length() == 2) || (width.length() == 3))) {
                 this.width = width;
                 return true;
             } else {
                 return false;
             }
-        catch(numberFormatException e){
+        } catch(NumberFormatException e){
                 return false;
-            }
         }
+    }
+
+    public boolean setAspect_ratio( String aspect_ratio ) {
+        this.aspect_ratio = aspect_ratio;
+        return true;
     }
 
     public boolean setConstruction(String construction) {
@@ -158,13 +166,14 @@ public class Tire {
     public boolean setMax_load(String max_load) {
         // todo make sure max load is numeric and either 3 or 4 characters and greater than 0.
        try {
-           int ml = Integer.parseInt(max_load)
+           int ml = Integer.parseInt(max_load);
                    if(ml>0 && ((max_load.length()==3)|(max_load.length()==4)) ){
                        this.max_load = max_load;
                        return true;
+                   } else {
+                       return false;
                    }
-       }
-       catch(NumberFormatException e){
+       } catch(NumberFormatException e){
            return false;
        }
     }
@@ -185,9 +194,8 @@ public class Tire {
             } else {
                 return false;
             }
-        catch(numberFormatException e){
+        } catch(NumberFormatException e) {
                 return false;
-            }
         }
     }
 
@@ -208,7 +216,7 @@ public class Tire {
 
     public boolean setSpeed_rating(String speed_rating) {
         // todo check validation.
-        /
+        //
         String[] speedRating = new String[]{"Z","P","S","R","Q","Y","V","W","T","H"};
         List<String> list = Arrays.asList(speedRating);
         if(list.contains(speed_rating)) {
@@ -234,6 +242,8 @@ public class Tire {
                 if(c>0){
                     this.cost = cost;
                     return true;
+                } else {
+                    return false;
                 }
         }
         catch(NumberFormatException e) {
@@ -250,10 +260,10 @@ public class Tire {
               if(ssp>0){
                   this.sales_price = sales_price;
                   return true;
-            }
-        }
-
-        catch(NumberFormatException e){
+            } else {
+                  return false;
+              }
+        } catch(NumberFormatException e){
             return false;
         }
     }
@@ -277,8 +287,9 @@ public class Tire {
 
     public boolean setImage(String image) {
         // todo make sure it's a string. More details coming later
-            this.image = image;
-            return true;
+        this.image = image;
+        return true;
+    }
 
     public boolean setHas_warranty(boolean has_warranty) {
         // todo make sure the value is either true or false.
@@ -296,7 +307,5 @@ public class Tire {
         // todo make sure the value is either true or false.
         this.is_discontinued = is_discontinued;
         return true;
-
-
     }
 }
