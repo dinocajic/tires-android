@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class EditActivity extends AppCompatActivity {
 
     // TODO Retrieved from TireRecyclerViewAdapter
-    // This is then going to grab the data and populate the fields
+    //      This is then going to grab the data and populate the fields
     private String   imported_part_number;
 
     private Spinner  brands_dropdown, models_dropdown;
