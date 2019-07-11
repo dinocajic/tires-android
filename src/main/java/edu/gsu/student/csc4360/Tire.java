@@ -121,8 +121,6 @@ public class Tire {
             return false;
         }
 
-        // TODO call Globals.db.partNumberExists(part_number) to check if the part number is unique or not
-
         this.part_number = part_number;
 
         return true;
