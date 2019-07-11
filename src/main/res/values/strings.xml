@@ -31,8 +31,9 @@
     <string name="part_number">Part Number</string>
     <string name="model">Model</string>
     <string name="width">Width</string>
+    <string name="aspect_ratio">AR</string>
     <string name="construction">Constr.</string>
-    <string name="wheel_diameter">Wheel Diam.</string>
+    <string name="wheel_diameter">Wheel</string>
     <string name="max_load">Max Load</string>
     <string name="max_psi">Max PSI</string>
     <string name="ply">Ply Amount</string>

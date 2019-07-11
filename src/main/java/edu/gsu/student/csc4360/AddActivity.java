@@ -2,25 +2,25 @@ package edu.gsu.student.csc4360;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
 
     private Spinner  brands_dropdown, models_dropdown;
 
-    private EditText part_number, width, construction, wheel_diameter, max_load, max_psi, ply,
+    private EditText part_number, width, aspect_ratio, construction, wheel_diameter, max_load, max_psi, ply,
                      load_rating, speed_rating, weight, cost, sales_price, qty_per_unit;
 
     private Switch   has_warranty, is_dot_approved, is_disco;
@@ -29,20 +29,14 @@ public class AddActivity extends AppCompatActivity {
 
     private Tire     tire;
 
+    private Uri      imageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
         this.init();
-
-        // GENERAL OVERVIEW ------------------------------------------------------------------------
-        // todo add listeners
-        // todo on button click, grab all of the EditText fields
-        // todo create Tire object and insert all of the data into it
-        // todo tire object should verify data validity
-        // todo call Globals.db.insert() and pass the Tire object to it
-        // -----------------------------------------------------------------------------------------
     }
 
     private void init() {
@@ -50,6 +44,7 @@ public class AddActivity extends AppCompatActivity {
         this.models_dropdown = findViewById( R.id.models_dropdown );
         this.width           = findViewById( R.id.width );
         this.part_number     = findViewById( R.id.part_number );
+        this.aspect_ratio    = findViewById( R.id.aspect_ratio );
         this.construction    = findViewById( R.id.construction );
         this.wheel_diameter  = findViewById( R.id.wheel_diameter );
         this.max_load        = findViewById( R.id.max_load );
@@ -66,55 +61,155 @@ public class AddActivity extends AppCompatActivity {
         this.is_disco        = findViewById( R.id.is_discontinued );
         this.upload_image    = findViewById( R.id.upload_image );
         this.add_button      = findViewById( R.id.add_button );
+        this.imageUri        = null;
+
+        // TODO Maybe add on-click listeners to each EditText so that once the user presses enter,
+        //      the keyboard will close. Use closeKeyboard() method below
 
         this.upload_image.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                 final int ACTIVITY_SELECT_IMAGE = 1234;
                 startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
-        } );
-
-        // todo Need to add on click listeners to most items so that the insides would clear if they match
-        // todo certain text and then if empty need to re-add the tip-text
+        });
 
         this.add_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if ( imageUri == null ) {
+                    Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //TODO need to first populate the DropDowns with brands and models before doing the checks
+                //tire.setBrand( brands_dropdown.getSelectedItem().toString() );
+                //tire.setModel( models_dropdown.getSelectedItem().toString() );
+
                 tire = new Tire();
-                tire.setBrand( brands_dropdown.getSelectedItem().toString() );
-                tire.setModel( models_dropdown.getSelectedItem().toString() );
-                tire.setWidth( width.getText().toString() );
-                tire.setPart_number( part_number.getText().toString() );
-                tire.setConstruction( construction.getText().toString() );
-                tire.setWheel_diameter( wheel_diameter.getText().toString() );
-                tire.setMax_load( max_load.getText().toString() );
-                tire.setMax_psi( max_psi.getText().toString() );
-                tire.setPly( ply.getText().toString() );
-                tire.setLoad_rating( load_rating.getText().toString() );
-                tire.setSpeed_rating( speed_rating.getText().toString() );
-                tire.setWeight( weight.getText().toString() );
-                tire.setCost( cost.getText().toString() );
-                tire.setSales_price( sales_price.getText().toString() );
-                tire.setQty_per_unit( qty_per_unit.getText().toString() );
+
+                if ( !tire.setPart_number( part_number.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Part number must be between 1 and 20 alphanumeric characters and unique",
+                            Toast.LENGTH_LONG ).show();
+                    return;
+                }
+
+                if ( !tire.setWidth( width.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Width must be numeric with length 2 or 3, i.e. 245",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setAspect_ratio( aspect_ratio.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Aspect ratio must be numeric with length 2, i.e. 45",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setConstruction( construction.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct internal construction,  i.e. R, ZR",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setWheel_diameter( wheel_diameter.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct numeric wheel diameter, i.e. 17, 18, 22.5",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setMax_load( max_load.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct numeric Max Load, i.e. 950, 1700",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setMax_psi( max_psi.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct PSI, i.e. 35, 35.5, 104, 104.5",
+                            Toast.LENGTH_LONG ).show();
+                    return;
+                }
+
+                if ( !tire.setPly( ply.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct ply, i.e. 4, 5, 12",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setLoad_rating( load_rating.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct load rating, i.e. E, F",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setSpeed_rating( speed_rating.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct speed rating, i.e. Z, S",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setWeight( weight.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct weight, i.e. 50, 45.5, 105, 125.5",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setCost( cost.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify correct cost, i.e. 50, 99.99",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( !tire.setSales_price( sales_price.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify sales price, i.e. 50, 99.99",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+                if ( tire.setQty_per_unit( qty_per_unit.getText().toString() ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Specify quantity per unit, i.e. 1, 4",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
                 tire.setHas_warranty( has_warranty.isChecked() );
                 tire.setIs_dot_approved( is_dot_approved.isChecked() );
                 tire.setIs_discontinued( is_disco.isChecked() );
 
-                // todo need to add the ability to add photo to drawabale and move photo name
-                // todo not sure if the bottom portion is correct
-                tire.setImage( upload_image.getText().toString() );
+                tire.setImage( imageUri.toString() );
 
-                // Inserts the tire into the database
-                Globals.db.insert( tire );
+                // TODO Inserts the tire into the database
+                //      Globals.db.insert( tire );
+
+                Toast.makeText(getApplicationContext(), "Tire added successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /**
+     * Executes once the user selects the image from the gallery
+     *
+     * @param requestCode - request code
+     * @param resultCode  - result code
+     * @param data        - data
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,24 +218,24 @@ public class AddActivity extends AppCompatActivity {
             case 1234:
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String filePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-
-                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-                    /* Now you have choosen image in Bitmap format in object "yourSelectedImage". You can use it in way you want! */
-
-                    Log.e("Image: ", selectedImage.toString());
+                    this.imageUri = selectedImage;
+                    this.upload_image.setText( "Upload..." + selectedImage.toString().substring(0, 20) + "..." );
                 } else {
                     Log.e("Image", "Not ok");
                 }
         }
 
-    };
+    }
+
+    /**
+     * Closes the keyboard after completion. The user can press return to minimize the keyboard.
+     */
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 }
