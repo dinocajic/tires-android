@@ -33,8 +33,8 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.brand.setText( tires.get(position).getBrand() );
-        holder.model.setText( tires.get(position).getModel() );
+        holder.brand.setText( tires.get(position).getBrand().getName() );
+        holder.model.setText( tires.get(position).getModel().getName() );
         holder.part_number.setText( tires.get(position).getPart_number() );
 
         String tireSize = tires.get(position).getWidth() +

@@ -99,14 +99,20 @@ public class AddActivity extends AppCompatActivity {
 
                 tire = new Tire();
 
-                if ( !tire.setBrand( brands_dropdown.getSelectedItem().toString() ) ) {
+                Brands brands = new Brands();
+                brands.setName( brands_dropdown.getSelectedItem().toString() );
+
+                if ( !tire.setBrand( brands ) ) {
                     Toast.makeText( getApplicationContext(),
                             "Brand must be selected from the dropdown",
                             Toast.LENGTH_LONG ).show();
                     return;
                 }
 
-                if ( !tire.setModel( models_dropdown.getSelectedItem().toString() ) ) {
+                Models models = new Models();
+                models.setName( models_dropdown.getSelectedItem().toString() );
+
+                if ( !tire.setModel( models ) ) {
                     Toast.makeText( getApplicationContext(),
                             "Model must be selected from the dropdown",
                             Toast.LENGTH_LONG ).show();

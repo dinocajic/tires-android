@@ -46,8 +46,16 @@ public class SearchActivity extends AppCompatActivity {
 
                 for ( int i = 0; i < 100; i++ ) {
                     Tire tire = new Tire();
-                    tire.setBrand("MT" + i);
-                    tire.setModel("ATZP" + i);
+
+                    Brands brands = new Brands();
+                    brands.setName("MT" + i);
+
+                    Models models = new Models();
+                    models.setName("ATZP" + i);
+
+                    tire.setBrand( brands );
+                    tire.setModel( models );
+
                     tire.setPart_number("900000" + i);
                     tire.setWidth("245");
                     tire.setConstruction("R");
