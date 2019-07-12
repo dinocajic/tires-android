@@ -17,11 +17,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EditActivity extends AppCompatActivity {
 
-    // TODO Retrieved from TireRecyclerViewAdapter
-    //      This is then going to grab the data and populate the fields
     private String   imported_part_number;
+
+    private Tire     populate_tire;
 
     private Spinner  brands_dropdown, models_dropdown;
 
@@ -56,6 +59,8 @@ public class EditActivity extends AppCompatActivity {
             imported_part_number = (String) savedInstanceState.getSerializable("part_number");
         }
 
+        this.populate_tire = Globals.db.getProductByPartNumber( this.imported_part_number );
+
         this.init();
         this.createBrandsSpinner();
         this.createModelsSpinner();
@@ -84,11 +89,29 @@ public class EditActivity extends AppCompatActivity {
         this.upload_image    = findViewById( R.id.upload_image );
         this.modify_button   = findViewById( R.id.modifyButton );
         this.delete_button   = findViewById( R.id.deleteButton );
-
-        // TODO once the content is retrieved, set oldUri as the URI in the table.
         this.imageUri        = null;
 
-        // TODO populate the fields with the content that was retrieved.
+        this.part_number.setText(    populate_tire.getPart_number() );
+        this.width.setText(          populate_tire.getWidth() );
+        this.aspect_ratio.setText(   populate_tire.getAspect_ratio() );
+        this.construction.setText(   populate_tire.getConstruction() );
+        this.wheel_diameter.setText( populate_tire.getWheel_diameter() );
+        this.max_load.setText(       populate_tire.getMax_load() );
+        this.max_psi.setText(        populate_tire.getMax_psi() );
+        this.ply.setText(            populate_tire.getPly() );
+        this.load_rating.setText(    populate_tire.getLoad_rating() );
+        this.speed_rating.setText(   populate_tire.getSpeed_rating() );
+        this.weight.setText(         populate_tire.getWeight() );
+
+        this.imageUri = Uri.parse( populate_tire.getImage() );
+
+        this.cost.setText(           populate_tire.getCost() );
+        this.sales_price.setText(    populate_tire.getSales_price() );
+        this.qty_per_unit.setText(   populate_tire.getQty_per_unit() );
+
+        this.has_warranty.setChecked(    populate_tire.getHas_warranty() );
+        this.is_dot_approved.setChecked( populate_tire.getIs_dot_approved() );
+        this.is_disco.setChecked(        populate_tire.getIs_discontinued() );
 
         // Calls the method to close the keyboard when the user presses the Return Key
         this.closeKeyboardHelper( this.part_number, this.width, this.aspect_ratio, this.construction,
@@ -119,9 +142,9 @@ public class EditActivity extends AppCompatActivity {
                 }
 
                 tire = new Tire();
+                tire.setId( populate_tire.getId() );
 
-                Brands brands = new Brands();
-                brands.setName( brands_dropdown.getSelectedItem().toString() );
+                Brands brands = Globals.db.getBrand( brands_dropdown.getSelectedItem().toString() );
 
                 if ( !tire.setBrand( brands ) ) {
                     Toast.makeText( getApplicationContext(),
@@ -130,8 +153,7 @@ public class EditActivity extends AppCompatActivity {
                     return;
                 }
 
-                Models models = new Models();
-                models.setName( models_dropdown.getSelectedItem().toString() );
+                Models models = Globals.db.getModel( models_dropdown.getSelectedItem().toString() );
 
                 if ( !tire.setModel( models ) ) {
                     Toast.makeText( getApplicationContext(),
@@ -231,7 +253,7 @@ public class EditActivity extends AppCompatActivity {
                     return;
                 }
 
-                if ( tire.setQty_per_unit( qty_per_unit.getText().toString() ) ) {
+                if ( !tire.setQty_per_unit( qty_per_unit.getText().toString() ) ) {
                     Toast.makeText( getApplicationContext(),
                             "Specify quantity per unit, i.e. 1, 4",
                             Toast.LENGTH_SHORT ).show();
@@ -255,6 +277,7 @@ public class EditActivity extends AppCompatActivity {
                 //      If it doesn't, insert as new otherwise update
                 //      Updates the tire Globals.db.update()
                 //      If part number exists, and it's not the same as the imported_part_number, Toast that the part number exists
+                Globals.db.modifyProduct( tire );
                 Toast.makeText(getApplicationContext(), "Tire updated successfully", Toast.LENGTH_SHORT).show();
             }
         });
@@ -302,34 +325,38 @@ public class EditActivity extends AppCompatActivity {
      * Creates the Brands Dropdown menu
      */
     private void createBrandsSpinner() {
-        Spinner brands_spinner = findViewById(R.id.brands_dropdown);
+        List<String> spinnerArray =  new ArrayList<>();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.brands_dropdown, android.R.layout.simple_spinner_item);
+        // Grab the brands from the brands table and populate them
+        for ( Brands brand : Globals.db.getBrands() ) {
+            spinnerArray.add( brand.getName() );
+        }
 
-        // Specify the layout to use when the list of choices appears
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        brands_spinner.setAdapter(adapter);
+        Spinner brands = findViewById(R.id.brands_dropdown);
+        brands.setAdapter(adapter);
+        brands.setSelection( adapter.getPosition( this.populate_tire.getBrand().getName()));
     }
 
     /**
      * Creates the Models Dropdown menu
      */
     private void createModelsSpinner() {
-        Spinner models_spinner = findViewById(R.id.models_dropdown);
+        List<String> spinnerArray =  new ArrayList<>();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.models_dropdown, android.R.layout.simple_spinner_item);
+        // Grab the brands from the brands table and populate them
+        for ( Models model : Globals.db.getModels() ) {
+            spinnerArray.add( model.getName() );
+        }
 
-        // Specify the layout to use when the list of choices appears
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        models_spinner.setAdapter(adapter);
+        Spinner models = findViewById(R.id.models_dropdown);
+        models.setAdapter(adapter);
+        models.setSelection( adapter.getPosition( this.populate_tire.getModel().getName()));
     }
 
     /**
