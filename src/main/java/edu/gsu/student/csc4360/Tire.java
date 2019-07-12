@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class Tire {
 
-    private int id, productsId, imageId, latestCostId;
+    private int id, productsId, imageId, latestCostId, latestPriceId;
 
     private Brands brand;
     private Models model;
@@ -31,6 +31,8 @@ public class Tire {
     public int getLatestCostId() {
         return latestCostId;
     }
+
+    public int getLatestSalesPriceId() { return latestPriceId; }
 
     public Brands getBrand() {
         return brand;
@@ -125,6 +127,8 @@ public class Tire {
     public void setLatestCostId(int latestCostId) {
         this.latestCostId = latestCostId;
     }
+
+    public void setLatestPriceId(int latestPriceId) { this.latestPriceId = latestPriceId; }
 
     public boolean setBrand(Brands brand) {
         // todo get brands from Globals.db.getBrands() and verify that the brand actually exists
