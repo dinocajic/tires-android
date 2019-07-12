@@ -6,16 +6,37 @@ import java.util.regex.Pattern;
 
 public class Tire {
 
-    private String brand, model, part_number, width, aspect_ratio, construction, wheel_diameter, max_load, max_psi,
-                   ply, load_rating, speed_rating, weight, cost, sales_price, qty_per_unit, image;
+    private int id, productsId, imageId, latestCostId;
+
+    private Brands brand;
+    private Models model;
+
+    private String  part_number, width, aspect_ratio, construction, wheel_diameter, max_load, max_psi,
+            ply, load_rating, speed_rating, weight, cost, sales_price, qty_per_unit, image;
 
     private boolean has_warranty, is_dot_approved, is_discontinued;
 
-    public String getBrand() {
+    public int getId() {
+        return id;
+    }
+
+    public int getProductsId() {
+        return productsId;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public int getLatestCostId() {
+        return latestCostId;
+    }
+
+    public Brands getBrand() {
         return brand;
     }
 
-    public String getModel() {
+    public Models getModel() {
         return model;
     }
 
@@ -89,20 +110,32 @@ public class Tire {
         return is_discontinued;
     }
 
-    public boolean setBrand(String brand) {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProductsId(int productsId) {
+        this.productsId = productsId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public void setLatestCostId(int latestCostId) {
+        this.latestCostId = latestCostId;
+    }
+
+    public void setBrand(Brands brand) {
         // todo get brands from Globals.db.getBrands() and verify that the brand actually exists
         //      inside the returned array. getBrands() returns an array of Brands
         this.brand = brand;
-
-        return true;
     }
 
-    public boolean setModel(String model) {
+    public void setModel(Models model) {
         // todo get models from Globals.db.getModels() and verify that the model actually exists
         //      inside the returned array. getModels() returns an array of models
         this.model = model;
-
-        return true;
     }
 
     /**
@@ -143,7 +176,7 @@ public class Tire {
                 return false;
             }
         } catch(NumberFormatException e){
-                return false;
+            return false;
         }
     }
 
@@ -230,18 +263,18 @@ public class Tire {
      * @return boolean
      */
     public boolean setMax_load(String max_load) {
-       try {
-           int ml = Integer.parseInt(max_load);
+        try {
+            int ml = Integer.parseInt(max_load);
 
-           if(ml>0 && ((max_load.length()==3) || (max_load.length()==4)) ){
-               this.max_load = max_load;
-               return true;
-           } else {
-               return false;
-           }
-       } catch(NumberFormatException e) {
-           return false;
-       }
+            if(ml>0 && ((max_load.length()==3) || (max_load.length()==4)) ){
+                this.max_load = max_load;
+                return true;
+            } else {
+                return false;
+            }
+        } catch(NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
@@ -298,7 +331,7 @@ public class Tire {
                 return false;
             }
         } catch(NumberFormatException e) {
-                return false;
+            return false;
         }
     }
 
@@ -403,13 +436,13 @@ public class Tire {
      */
     public boolean setSales_price(String sales_price) {
         try{
-           double ssp = Double.parseDouble(sales_price);
-              if(ssp>0){
-                  this.sales_price = sales_price;
-                  return true;
+            double ssp = Double.parseDouble(sales_price);
+            if(ssp>0){
+                this.sales_price = sales_price;
+                return true;
             } else {
-                  return false;
-              }
+                return false;
+            }
         } catch(NumberFormatException e){
             return false;
         }
