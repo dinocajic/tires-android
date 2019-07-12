@@ -17,6 +17,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Adds the tire to the database
  */
@@ -92,15 +95,16 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // TODO Reactivate when going to mobile
                 if ( imageUri == null ) {
-                    Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
-                    return;
+                    //Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
+                    imageUri = Uri.parse("1234.jpg");
+                    //return;
                 }
 
                 tire = new Tire();
 
-                Brands brands = new Brands();
-                brands.setName( brands_dropdown.getSelectedItem().toString() );
+                Brands brands = Globals.db.getBrand( brands_dropdown.getSelectedItem().toString() );
 
                 if ( !tire.setBrand( brands ) ) {
                     Toast.makeText( getApplicationContext(),
@@ -109,8 +113,7 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
-                Models models = new Models();
-                models.setName( models_dropdown.getSelectedItem().toString() );
+                Models models = Globals.db.getModel( models_dropdown.getSelectedItem().toString() );
 
                 if ( !tire.setModel( models ) ) {
                     Toast.makeText( getApplicationContext(),
@@ -210,7 +213,7 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
-                if ( tire.setQty_per_unit( qty_per_unit.getText().toString() ) ) {
+                if ( !tire.setQty_per_unit( qty_per_unit.getText().toString() ) ) {
                     Toast.makeText( getApplicationContext(),
                             "Specify quantity per unit, i.e. 1, 4",
                             Toast.LENGTH_SHORT ).show();
@@ -229,7 +232,7 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
-                // TODO Inserts the tire into the database: Globals.db.insert( tire );
+                Globals.db.insert( tire );
 
                 Toast.makeText(getApplicationContext(), "Tire added successfully", Toast.LENGTH_SHORT).show();
             }
@@ -261,39 +264,39 @@ public class AddActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates the Brands Dropdown menu
-     * TODO Change brands_dropdown to accept the data retrieved from the table
+     * Creates the Brands Dropdown menu=
      */
     private void createBrandsSpinner() {
-        Spinner brands_spinner = findViewById(R.id.brands_dropdown);
+        List<String> spinnerArray =  new ArrayList<>();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.brands_dropdown, android.R.layout.simple_spinner_item);
+        // Grab the brands from the brands table and populate them
+        for ( Brands brand : Globals.db.getBrands() ) {
+            spinnerArray.add( brand.getName() );
+        }
 
-        // Specify the layout to use when the list of choices appears
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        brands_spinner.setAdapter(adapter);
+        Spinner brands = findViewById(R.id.brands_dropdown);
+        brands.setAdapter(adapter);
     }
 
     /**
      * Creates the Models Dropdown menu
-     * TODO Change models_dropdown to accept the data retrieved from the table
      */
     private void createModelsSpinner() {
-        Spinner models_spinner = findViewById(R.id.models_dropdown);
+        List<String> spinnerArray =  new ArrayList<>();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.models_dropdown, android.R.layout.simple_spinner_item);
+        // Grab the brands from the brands table and populate them
+        for ( Models model : Globals.db.getModels() ) {
+            spinnerArray.add( model.getName() );
+        }
 
-        // Specify the layout to use when the list of choices appears
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        models_spinner.setAdapter(adapter);
+        Spinner models = findViewById(R.id.models_dropdown);
+        models.setAdapter(adapter);
     }
 
     /**
