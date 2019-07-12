@@ -14,14 +14,9 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-
-    Button   search_button, help_button;
-
-    EditText search_text;
-
-    //vars
-    private ArrayList<Tire> tires     = new ArrayList<>();
+    private Button          search_button, help_button;
+    private EditText        search_text;
+    private ArrayList<Tire> tires = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +35,8 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                // TODO Retrieve the content from the database based on the search parameter and add them to
-                //      the tires ArrayList. This will need to be done on button click.
-
-
-                for ( int i = 0; i < 100; i++ ) {
-                    Tire tire = new Tire();
-
-                    Brands brands = new Brands();
-                    brands.setName("MT" + i);
-
-                    Models models = new Models();
-                    models.setName("ATZP" + i);
-
-                    tire.setBrand( brands );
-                    tire.setModel( models );
-
-                    tire.setPart_number("900000" + i);
-                    tire.setWidth("245");
-                    tire.setConstruction("R");
-                    tire.setWheel_diameter("17");
-                    tire.setImage("abc" + i + ".jpg");
-                    tires.add( tire );
+                for ( Tire t : Globals.db.getProducts( search_text.getText().toString() ) ) {
+                    tires.add(t);
                 }
 
                 initRecyclerView();
@@ -79,7 +54,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         TireRecyclerViewAdapter adapter = new TireRecyclerViewAdapter(this, tires);
         recyclerView.setAdapter(adapter);

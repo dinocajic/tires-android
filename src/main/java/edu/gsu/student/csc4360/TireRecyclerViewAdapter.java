@@ -2,6 +2,11 @@ package edu.gsu.student.csc4360;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +17,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerViewAdapter.ViewHolder>{
@@ -37,7 +47,8 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
         holder.model.setText( tires.get(position).getModel().getName() );
         holder.part_number.setText( tires.get(position).getPart_number() );
 
-        String tireSize = tires.get(position).getWidth() +
+        String tireSize = tires.get(position).getWidth() + "/" +
+                tires.get(position).getAspect_ratio() +
                 tires.get(position).getConstruction() +
                 tires.get(position).getWheel_diameter();
 
@@ -53,7 +64,10 @@ public class TireRecyclerViewAdapter extends RecyclerView.Adapter<TireRecyclerVi
             }
         });
 
-        holder.image.setImageResource( R.drawable.tire_mickey_thompson_atz_p3 );
+        //holder.image.setImageResource( R.drawable.tire_mickey_thompson_atz_p3 );
+        //holder.image.setImageURI( Uri.parse( tires.get(position).getImage() ) );
+
+        Picasso.get().load(tires.get(position).getImage()).into(holder.image);
     }
 
     @Override
