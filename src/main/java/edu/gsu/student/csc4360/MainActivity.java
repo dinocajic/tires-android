@@ -10,13 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-/**
- * @todo need to prepopulate some tires into the database when the application is launched
- * @todo need to process search
- */
 public class MainActivity extends AppCompatActivity {
 
-    private Button    add, search, help;
+    private Button    add, search;
     private ImageView banner;
     private String    banner_uri = "http://mickeythompsontires.com";
 
@@ -26,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.init();
+
+        //Re-Enable if not populated ------------------------------------------------------------------------------------
+        //Globals.db.populateTables();
     }
 
     /**
@@ -37,11 +36,8 @@ public class MainActivity extends AppCompatActivity {
         // Starts the database class
         Globals.db = new DatabaseHelper(this);
 
-        // @todo populate the database here @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
         this.add        = findViewById(R.id.mainAddButton) ;
         this.search     = findViewById(R.id.mainSearchButton);
-        this.help       = findViewById(R.id.mainHelpButton);
         this.banner     = findViewById(R.id.mickeyThompsonBanner);
 
         // Opens the Add new items page
@@ -50,15 +46,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent addIntent = new Intent( MainActivity.this, AddActivity.class );
                 startActivity( addIntent );
-            }
-        });
-
-        // Opens the Help page
-        this.help.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent helpIntent = new Intent( MainActivity.this, HelpActivity.class );
-                startActivity( helpIntent );
             }
         });
 
@@ -77,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } ) ;
 
-        // Processes the search
-        // @todo needs to be modified to actually process the search
         this.search.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
