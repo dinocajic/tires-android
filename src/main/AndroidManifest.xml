@@ -16,11 +16,17 @@
         android:supportsRtl="true"
         android:name=".Globals"
         android:theme="@style/AppTheme">
-        <activity android:name=".HelpActivity"></activity>
-        <activity android:name=".EditActivity" />
-        <activity android:name=".AddActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".HelpActivity"
+                  android:parentActivityName=".SearchActivity"></activity>
+        <activity android:name=".EditActivity"
+                  android:parentActivityName=".SearchActivity" />
+        <activity android:name=".AddActivity"
+                  android:parentActivityName=".MainActivity" />
+        <activity android:name=".SearchActivity"
+                  android:parentActivityName=".MainActivity"
+                  android:launchMode="singleTop" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
