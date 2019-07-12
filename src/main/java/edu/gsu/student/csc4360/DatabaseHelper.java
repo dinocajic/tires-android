@@ -345,7 +345,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues productImageValues = new ContentValues();
         productImageValues.put(ProductImagesTable.COL_NAME, tire.getImage());
-        db.update(ProductImagesTable.TABLE, productImageValues, ProductImagesTable.COL_ID+"="+tire.getImageId());
+        db.update(ProductImagesTable.TABLE, productImageValues, ProductImagesTable.COL_ID+"="+tire.getImageId(), null);
 
         ContentValues productValues = new ContentValues();
         productValues.put(ProductsTable.COL_QTY_PER_UNIT, tire.getQty_per_unit());
@@ -462,7 +462,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.moveToFirst();
 
-        String image = queryCursor.getString(queryCursor.getColumnIndex(ProductImagesTable.COL_NAME))
+        String image = queryCursor.getString(queryCursor.getColumnIndex(ProductImagesTable.COL_NAME));
 
         queryCursor.close();
 
@@ -503,8 +503,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         tire.setIs_dot_approved(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DOT_APPR)) != 0);
         tire.setIs_discontinued(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DISCO)) != 0);
 
-        int brandId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_BRAND_ID);
-        int modelId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_MODEL_ID);
+        int brandId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_BRAND_ID));
+        int modelId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_MODEL_ID));
 
         Brands brand = getBrand(brandId);
         if (brand != null) {
@@ -523,9 +523,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (productsCursor.getCount() > 0) {
             productsCursor.moveToFirst();
 
-            tire.setProductsId(productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_ID))
+            tire.setProductsId(productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_ID)));
             tire.setQty_per_unit(productsCursor.getString(productsCursor.getColumnIndex(ProductsTable.COL_QTY_PER_UNIT)));
-            tire.setLatestCostId(productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_LATEST_COST));
+            tire.setLatestCostId(productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_LATEST_COST)));
 
             Cursor productCostCursor = db.rawQuery("SELECT * FROM " + ProductCostsTable.TABLE + " WHERE " +
                     ProductCostsTable.COL_ID + " = " + tire.getLatestCostId() + ";", null);
@@ -542,8 +542,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // todo add sql join for brand and model and add brand/model to tire
-    // todo Cost, Image, Sales, Quantity have no database column
     public Tire[] getProducts(String searchParam) {
         String[] parameters = searchParam.split("/|R");
         if (parameters.length != 3) {
@@ -580,8 +578,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             tire.setIs_dot_approved(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DOT_APPR)) != 0);
             tire.setIs_discontinued(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DISCO)) != 0);
 
-            int brandId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_BRAND_ID);
-            int modelId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_MODEL_ID);
+            int brandId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_BRAND_ID));
+            int modelId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_MODEL_ID));
 
             Brands brand = getBrand(brandId);
             if (brand != null) {
@@ -601,7 +599,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 productsCursor.moveToFirst();
 
                 tire.setQty_per_unit(productsCursor.getString(productsCursor.getColumnIndex(ProductsTable.COL_QTY_PER_UNIT)));
-                int costId = productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_LATEST_COST);
+                int costId = productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_LATEST_COST));
 
                 Cursor productCostCursor = db.rawQuery("SELECT * FROM " + ProductCostsTable.TABLE + " WHERE " +
                         ProductCostsTable.COL_ID + " = " + costId + ";", null);
