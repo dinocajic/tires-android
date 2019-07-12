@@ -285,7 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String[] brands = {"BFGoodrich", "Continental", "Cooper", "Delinte", "Dunlop", "Falken",
-                "Firestone", "Michelin","Mickey Thompson", "Toyo"};
+                "Firestone", "Michelin", "Mickey Thompson", "Toyo"};
 
         for( String brand : brands ) {
             ContentValues brandValues = new ContentValues();
@@ -750,77 +750,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public Tire[] getProducts(String searchParam) {
         String[] parameters = searchParam.split("/|R");
+
         if (parameters.length != 3) {
             return new Tire[] {};
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + TiresTable.TABLE + " WHERE " +
-                TiresTable.COL_WIDTH + " = " + parameters[0] + " AND " +
-                TiresTable.COL_ASPECT_RATIO + " = " + parameters[1] + " AND " +
-                TiresTable.COL_RIM_DIAM + " = " + parameters[2] + ";", null);
+                TiresTable.COL_WIDTH        + " = '" + parameters[0] + "' AND " +
+                TiresTable.COL_ASPECT_RATIO + " = '" + parameters[1] + "' AND " +
+                TiresTable.COL_RIM_DIAM     + " = '" + parameters[2] + "';", null);
 
         Tire[] tires = new Tire[queryCursor.getCount()];
         int i = 0;
 
         queryCursor.moveToFirst();
+
         while (!queryCursor.isAfterLast()) {
-            Tire tire = new Tire();
-
-            tire.setId(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_ID)));
-            tire.setPart_number(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.PART_NUM)));
-            tire.setWidth(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_WIDTH)));
-            tire.setConstruction(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_CONSTR)));
-            tire.setWheel_diameter(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_RIM_DIAM)));
-            tire.setAspect_ratio(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_ASPECT_RATIO)));
-            tire.setMax_load(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_MAX_LOAD)));
-
-            tire.setMax_psi(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_MAX_PSI)));
-            tire.setLoad_rating(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_LOAD_RT)));
-            tire.setSpeed_rating(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_SPEED_RT)));
-            tire.setWeight(queryCursor.getString(queryCursor.getColumnIndex(TiresTable.COL_WEIGHT)));
-
-            tire.setHas_warranty(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_HAS_WARRANTY)) != 0);
-            tire.setIs_dot_approved(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DOT_APPR)) != 0);
-            tire.setIs_discontinued(queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_IS_DISCO)) != 0);
-
-            int brandId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_BRAND_ID));
-            int modelId = queryCursor.getInt(queryCursor.getColumnIndex(TiresTable.COL_MODEL_ID));
-
-            Brands brand = getBrand(brandId);
-            if (brand != null) {
-                tire.setBrand(brand);
-            }
-
-            Models model = getModel(modelId);
-            if (model != null) {
-                tire.setModel(model);
-            }
-
-            tire.setImage(getImage(tire.getId()));
-
-            Cursor productsCursor = db.rawQuery("SELECT * FROM " + ProductsTable.TABLE + " WHERE " +
-                    ProductsTable.COL_PRODUCT_ID + " = " + tire.getId() + ";", null);
-            if (productsCursor.getCount() > 0) {
-                productsCursor.moveToFirst();
-
-                tire.setQty_per_unit(productsCursor.getString(productsCursor.getColumnIndex(ProductsTable.COL_QTY_PER_UNIT)));
-                int costId = productsCursor.getInt(productsCursor.getColumnIndex(ProductsTable.COL_LATEST_COST));
-
-                Cursor productCostCursor = db.rawQuery("SELECT * FROM " + ProductCostsTable.TABLE + " WHERE " +
-                        ProductCostsTable.COL_ID + " = " + costId + ";", null);
-                if (productCostCursor.getCount() > 0) {
-                    tire.setCost(queryCursor.getString(queryCursor.getColumnIndex(ProductCostsTable.COL_COST)));
-                }
-                productCostCursor.close();
-            }
-            productsCursor.close();
+            // -----------------------------------------------------------------------------------------
+            // Dino Cajic
+            // Removed redundancy. Code to retrieve tire is already done in getProductByPartNumber()
+            // -----------------------------------------------------------------------------------------
+            Tire tire = this.getProductByPartNumber( queryCursor.getString( queryCursor.getColumnIndex( TiresTable.PART_NUM)));
 
             tires[i] = tire;
             i++;
 
             queryCursor.moveToNext();
         }
+
         queryCursor.close();
 
         return tires;
