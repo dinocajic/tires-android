@@ -273,11 +273,13 @@ public class EditActivity extends AppCompatActivity {
                     return;
                 }
 
-                // TODO Check to make sure that the part number actually exists
-                //      Use Globals.db.checkPartNumber()
-                //      If it doesn't, insert as new otherwise update
-                //      Updates the tire Globals.db.update()
-                //      If part number exists, and it's not the same as the imported_part_number, Toast that the part number exists
+                if ( Globals.db.partNumberExists( tire.getPart_number()) && !tire.getPart_number().equals( imported_part_number ) ) {
+                    Toast.makeText( getApplicationContext(),
+                            "Part number already exists",
+                            Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+                
                 Globals.db.modifyProduct( tire );
                 Toast.makeText(getApplicationContext(), "Tire updated successfully", Toast.LENGTH_SHORT).show();
             }
