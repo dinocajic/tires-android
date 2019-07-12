@@ -131,15 +131,11 @@ public class Tire {
     public void setLatestPriceId(int latestPriceId) { this.latestPriceId = latestPriceId; }
 
     public boolean setBrand(Brands brand) {
-        // todo get brands from Globals.db.getBrands() and verify that the brand actually exists
-        //      inside the returned array. getBrands() returns an array of Brands
         this.brand = brand;
         return true;
     }
 
     public boolean setModel(Models model) {
-        // todo get models from Globals.db.getModels() and verify that the model actually exists
-        //      inside the returned array. getModels() returns an array of models
         this.model = model;
         return true;
     }
