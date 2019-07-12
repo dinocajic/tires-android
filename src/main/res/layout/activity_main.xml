@@ -24,23 +24,9 @@
             android:layout_height="60dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="wrap_content"
-                android:layout_height="47.5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="1dp"
-                android:layout_weight="1"
-                android:background="#D1D1D1"
-                android:ems="10"
-                android:inputType="text"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="@string/search_text" />
-
             <Button
                 android:id="@+id/mainSearchButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="1dp"
@@ -50,17 +36,6 @@
                 android:textColor="#FFFFFFFF"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/mainHelpButton"
-                android:layout_width="46dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="0"
-                android:background="#4E4E4E"
-                android:text="@string/help_button"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
