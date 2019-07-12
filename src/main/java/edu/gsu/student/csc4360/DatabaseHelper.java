@@ -329,7 +329,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Added Time Stamp
         // -----------------------------------------------------------------------------------------
         String date_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-        Log.e("Time Stamp: ", date_time);
 
         Brands brand = tire.getBrand();
         Models model = tire.getModel();
@@ -418,24 +417,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Models model = tire.getModel();
 
         ContentValues tireValues = new ContentValues();
-        tireValues.put(TiresTable.PART_NUM,         tire.getPart_number());
-        tireValues.put(TiresTable.COL_BRAND_ID,     brand.getId());
-        tireValues.put(TiresTable.COL_MODEL_ID,     model.getId());
-        tireValues.put(TiresTable.COL_WIDTH,        tire.getWidth());
-        tireValues.put(TiresTable.COL_RIM_DIAM,     tire.getWheel_diameter());
-        tireValues.put(TiresTable.COL_ASPECT_RATIO, tire.getAspect_ratio());
-        tireValues.put(TiresTable.COL_CONSTR,       tire.getConstruction());
-        tireValues.put(TiresTable.COL_MAX_LOAD,     tire.getMax_load());
-        tireValues.put(TiresTable.COL_MAX_PSI,      tire.getMax_psi());
-        tireValues.put(TiresTable.COL_PLY,          tire.getPly());
-        tireValues.put(TiresTable.COL_LOAD_RT,      tire.getLoad_rating());
-        tireValues.put(TiresTable.COL_SPEED_RT,     tire.getSpeed_rating());
-        tireValues.put(TiresTable.COL_IS_DOT_APPR,  tire.getIs_dot_approved());
-        tireValues.put(TiresTable.COL_WEIGHT,       tire.getWeight());
-        tireValues.put(TiresTable.COL_HAS_WARRANTY, tire.getHas_warranty());
-        tireValues.put(TiresTable.COL_IS_DISCO,     tire.getIs_discontinued());
+        tireValues.put( TiresTable.PART_NUM,         tire.getPart_number());
+        tireValues.put( TiresTable.COL_BRAND_ID,     brand.getId());
+        tireValues.put( TiresTable.COL_MODEL_ID,     model.getId());
+        tireValues.put( TiresTable.COL_WIDTH,        tire.getWidth());
+        tireValues.put( TiresTable.COL_RIM_DIAM,     tire.getWheel_diameter());
+        tireValues.put( TiresTable.COL_ASPECT_RATIO, tire.getAspect_ratio());
+        tireValues.put( TiresTable.COL_CONSTR,       tire.getConstruction());
+        tireValues.put( TiresTable.COL_MAX_LOAD,     tire.getMax_load());
+        tireValues.put( TiresTable.COL_MAX_PSI,      tire.getMax_psi());
+        tireValues.put( TiresTable.COL_PLY,          tire.getPly());
+        tireValues.put( TiresTable.COL_LOAD_RT,      tire.getLoad_rating());
+        tireValues.put( TiresTable.COL_SPEED_RT,     tire.getSpeed_rating());
+        tireValues.put( TiresTable.COL_IS_DOT_APPR,  tire.getIs_dot_approved());
+        tireValues.put( TiresTable.COL_WEIGHT,       tire.getWeight());
+        tireValues.put( TiresTable.COL_HAS_WARRANTY, tire.getHas_warranty());
+        tireValues.put( TiresTable.COL_IS_DISCO,     tire.getIs_discontinued());
         db.update(TiresTable.TABLE, tireValues, TiresTable.COL_ID + "=" + tire.getId(), null);
-        Log.e( "ID: ", tire.getId() + "" );
 
 //        ContentValues productImageValues = new ContentValues();
 //        productImageValues.put(ProductImagesTable.COL_NAME, tire.getImage());
@@ -453,11 +451,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * @param product_id
+     * @param part_number
      */
-    public void delete(int product_id) {
+    public void delete(String part_number) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TiresTable.TABLE + " WHERE " + TiresTable.COL_ID + " = " + product_id + ";");
+
+        Tire tire = getProductByPartNumber( part_number );
+
+        String date_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+        ContentValues tireValues = new ContentValues();
+        tireValues.put( TiresTable.COL_REMOVED_DATE, date_time);
+        db.update(TiresTable.TABLE, tireValues, TiresTable.COL_ID + "=" + tire.getId(), null);
+
+        //db.execSQL("DELETE FROM " + TiresTable.TABLE + " WHERE " + TiresTable.COL_ID + " = " + product_id + ";");
     }
 
     /**
@@ -663,7 +670,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Tire getProductByPartNumber(String partNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + TiresTable.TABLE + " WHERE " +
-                TiresTable.PART_NUM + " = '" + partNumber + "';", null);
+                TiresTable.PART_NUM         + " = '" + partNumber + "' AND " +
+                TiresTable.COL_REMOVED_DATE + " = '0';", null);
 
         if (queryCursor.getCount() == 0) {
             return null;
@@ -759,7 +767,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + TiresTable.TABLE + " WHERE " +
                 TiresTable.COL_WIDTH        + " = '" + parameters[0] + "' AND " +
                 TiresTable.COL_ASPECT_RATIO + " = '" + parameters[1] + "' AND " +
-                TiresTable.COL_RIM_DIAM     + " = '" + parameters[2] + "';", null);
+                TiresTable.COL_RIM_DIAM     + " = '" + parameters[2] + "' AND " +
+                TiresTable.COL_REMOVED_DATE + " = '0';", null);
 
         Tire[] tires = new Tire[queryCursor.getCount()];
         int i = 0;

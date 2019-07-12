@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -282,18 +283,26 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        // TODO Create Delete
         this.delete_button.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                // TODO Call Globals.db.delete() and delete the part number. If successful, return Toast. If not return toast.
-                //      - return to main screen after 2 seconds
+                Globals.db.delete( part_number.getText().toString() );
                 Toast.makeText( getApplicationContext(),
                         "Item has been deleted successfully",
                         Toast.LENGTH_SHORT ).show();
+
+                // Redirect to Search after 2 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent searchIntent = new Intent( EditActivity.this, SearchActivity.class );
+                        searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity( searchIntent );
+                    }
+                }, 2000);
             }
-        } );
+        });
 
     }
 
