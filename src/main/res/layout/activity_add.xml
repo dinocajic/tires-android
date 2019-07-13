@@ -128,7 +128,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:hint="@string/wheel_diameter"
                 android:textColor="#A8A8A8" />
