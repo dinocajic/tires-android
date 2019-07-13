@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.Calendar;
 
@@ -435,18 +434,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         tireValues.put( TiresTable.COL_IS_DISCO,     tire.getIs_discontinued());
         db.update(TiresTable.TABLE, tireValues, TiresTable.COL_ID + "=" + tire.getId(), null);
 
-//        ContentValues productImageValues = new ContentValues();
-//        productImageValues.put(ProductImagesTable.COL_NAME, tire.getImage());
-//        db.update(ProductImagesTable.TABLE, productImageValues, ProductImagesTable.COL_ID + "=" + tire.getImageId(), null);
-//
-//        ContentValues productValues = new ContentValues();
-//        productValues.put(ProductsTable.COL_QTY_PER_UNIT, tire.getQty_per_unit());
-//        db.update(ProductsTable.TABLE, productValues, ProductsTable.COL_ID + "=" + tire.getProductsId(), null);
-//
-//        ContentValues productCostsValues = new ContentValues();
-//        productCostsValues.put(ProductCostsTable.COL_COST, tire.getCost());
-//        db.update(ProductCostsTable.TABLE, productCostsValues, ProductCostsTable.COL_ID + "=" + tire.getLatestCostId(), null);
+        ContentValues productImageValues = new ContentValues();
+        productImageValues.put(ProductImagesTable.COL_NAME, tire.getImage());
+        db.update(ProductImagesTable.TABLE, productImageValues, ProductImagesTable.COL_ID + "=" + tire.getImageId(), null);
 
+        ContentValues productValues = new ContentValues();
+        productValues.put(ProductsTable.COL_QTY_PER_UNIT, tire.getQty_per_unit());
+        db.update(ProductsTable.TABLE, productValues, ProductsTable.COL_ID + "=" + tire.getId(), null);
+
+        ContentValues productCostsValues = new ContentValues();
+        productCostsValues.put(ProductCostsTable.COL_COST, tire.getCost());
+        db.update(ProductCostsTable.TABLE, productCostsValues, ProductCostsTable.COL_ID + "=" + tire.getLatestCostId(), null);
+
+        ContentValues productSalesValues = new ContentValues();
+        productSalesValues.put(ProductSalesPricesTable.COL_PRICE, tire.getSales_price());
+        db.update(ProductSalesPricesTable.TABLE, productSalesValues, ProductSalesPricesTable.COL_ID + "=" + tire.getLatestSalesPriceId(), null);
     }
 
     /**
@@ -743,6 +745,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (productSalesCursor.getCount() > 0) {
             productSalesCursor.moveToFirst();
             tire.setSales_price( productSalesCursor.getString( productSalesCursor.getColumnIndex( ProductSalesPricesTable.COL_PRICE)) );
+        }
+
+        Cursor productImageCursor = db.rawQuery("SELECT * FROM " + ProductImagesTable.TABLE + " WHERE " +
+                ProductImagesTable.COL_PRODUCTS_ID + " = " + tire.getId() + ";", null);
+        if (productImageCursor.getCount() > 0) {
+            productImageCursor.moveToFirst();
+            tire.setImageId( productImageCursor.getInt( productImageCursor.getColumnIndex( ProductImagesTable.COL_ID)) );
         }
 
         productSalesCursor.close();

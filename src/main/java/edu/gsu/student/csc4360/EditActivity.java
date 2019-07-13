@@ -283,6 +283,10 @@ public class EditActivity extends AppCompatActivity {
                     return;
                 }
 
+                tire.setLatestCostId(  populate_tire.getLatestCostId() );
+                tire.setLatestPriceId( populate_tire.getLatestSalesPriceId() );
+                tire.setImageId(       populate_tire.getImageId() );
+
                 Globals.db.modifyProduct( tire );
                 Toast.makeText(getApplicationContext(), "Tire updated successfully", Toast.LENGTH_SHORT).show();
             }
