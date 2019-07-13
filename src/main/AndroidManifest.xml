@@ -17,16 +17,21 @@
         android:name=".Globals"
         android:theme="@style/AppTheme">
         <activity android:name=".HelpActivity"
-                  android:parentActivityName=".SearchActivity"></activity>
+                  android:parentActivityName=".SearchActivity"
+                  android:screenOrientation="portrait"></activity>
         <activity android:name=".EditActivity"
-                  android:parentActivityName=".SearchActivity" />
+                  android:parentActivityName=".SearchActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".AddActivity"
-                  android:parentActivityName=".MainActivity" />
+                  android:parentActivityName=".MainActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".SearchActivity"
                   android:parentActivityName=".MainActivity"
-                  android:launchMode="singleTop" />
+                  android:launchMode="singleTop"
+                  android:screenOrientation="portrait" />
         <activity android:name=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
