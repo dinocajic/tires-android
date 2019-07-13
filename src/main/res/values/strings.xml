@@ -54,9 +54,12 @@
 
     <!-- Help Activity ######################################################################### -->
     <string name="help_logo">Help Logo</string>
-    <string name="help_content"><b>How to use the search?</b>\nType in the tire size in the
+    <string name="help_content_main"><b>How to use the search?</b>\nType in the tire size in the
         following format:\nTire Width - Aspect Ratio - Internal Const. -
-        Wheel Diam.\ni.e.245/35R20\n\n<b>Tire Type</b>\nThe letter \"P\" at the beginning of the \"Tire Size\"
+        Wheel Diam.\ni.e.245/35R20\n\n
+    </string>
+
+    <string name="help_content_other"><b>Tire Type</b>\nThe letter \"P\" at the beginning of the \"Tire Size\"
         tells us the tire is a P-Metric tire, referring to tires made to certain standards within the
         United States, intended for Passenger vehicles.\n\nIf a tire size has no letters at the
         beginning, this indicates a Euro metric tire. P-Metric and Euro-Metric tires may have
