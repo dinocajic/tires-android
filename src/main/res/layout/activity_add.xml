@@ -64,6 +64,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
+                android:textAllCaps="true"
                 android:background="#FFFFFF"
                 android:ems="10"
                 android:inputType="text"
@@ -87,7 +88,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:hint="@string/width"
                 android:textColor="#A8A8A8" />
@@ -101,7 +102,7 @@
                 android:background="#FFFFFF"
                 android:ems="10"
                 android:hint="@string/aspect_ratio"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:textColor="#A8A8A8" />
 
@@ -112,6 +113,7 @@
                 android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
+                android:textAllCaps="true"
                 android:ems="10"
                 android:inputType="text"
                 android:padding="10dp"
@@ -126,7 +128,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:hint="@string/wheel_diameter"
                 android:textColor="#A8A8A8" />
@@ -147,7 +149,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:hint="@string/max_load"
                 android:textColor="#A8A8A8" />
@@ -160,7 +162,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:hint="@string/max_psi"
                 android:textColor="#A8A8A8" />
@@ -172,8 +174,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
+                android:textAllCaps="true"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:hint="@string/ply"
                 android:textColor="#A8A8A8" />
@@ -193,6 +196,7 @@
                 android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
+                android:textAllCaps="true"
                 android:ems="10"
                 android:inputType="text"
                 android:padding="10dp"
@@ -206,6 +210,7 @@
                 android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
+                android:textAllCaps="true"
                 android:ems="10"
                 android:inputType="text"
                 android:padding="10dp"
@@ -220,7 +225,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:hint="@string/weight"
                 android:textColor="#A8A8A8" />
@@ -241,7 +246,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:hint="@string/cost"
                 android:textColor="#A8A8A8" />
@@ -254,7 +259,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:hint="@string/sales_price"
                 android:textColor="#A8A8A8" />
@@ -267,7 +272,7 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="10dp"
                 android:hint="@string/qty_per_unit"
                 android:textColor="#A8A8A8" />
