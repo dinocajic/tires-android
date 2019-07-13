@@ -1,10 +1,14 @@
 package edu.gsu.student.csc4360;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -72,5 +76,50 @@ public class MainActivity extends AppCompatActivity {
                 startActivity( searchIntent );
             }
         });
+    }
+
+    /**
+     * Creates the menu from res/menu/options
+     *
+     * @param menu - menu bar
+     * @return boolean
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate( R.menu.options, menu );
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Allows for the user to switch to other activities
+     *
+     * @param item - menu item
+     * @return - boolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Intent intent = new Intent( MainActivity.this, MainActivity.class );
+
+        switch( item.getItemId() ) {
+
+            case R.id.menu_help:
+                intent = new Intent( MainActivity.this, HelpActivity.class );
+                break;
+            case R.id.menu_add_new_item:
+                intent = new Intent( MainActivity.this, AddActivity.class );
+                break;
+            case R.id.menu_search:
+                intent = new Intent( MainActivity.this, SearchActivity.class );
+                break;
+            default:
+                Log.e("Activity", "Default case accessed in onOptionsItemSelected()");
+        }
+
+        startActivity( intent );
+
+        return super.onOptionsItemSelected(item);
     }
 }

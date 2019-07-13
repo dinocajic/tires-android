@@ -1,5 +1,6 @@
 package edu.gsu.student.csc4360;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -279,7 +282,7 @@ public class EditActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT ).show();
                     return;
                 }
-                
+
                 Globals.db.modifyProduct( tire );
                 Toast.makeText(getApplicationContext(), "Tire updated successfully", Toast.LENGTH_SHORT).show();
             }
@@ -391,5 +394,46 @@ public class EditActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    /**
+     * Creates the menu from res/menu/options
+     *
+     * @param menu - menu bar
+     * @return boolean
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate( R.menu.options, menu );
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Allows for the user to switch to other activities
+     *
+     * @param item - menu item
+     * @return - boolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch( item.getItemId() ) {
+
+            case R.id.menu_help:
+                startActivity( new Intent( EditActivity.this, HelpActivity.class ) );
+                break;
+            case R.id.menu_add_new_item:
+                startActivity( new Intent( EditActivity.this, AddActivity.class ) );
+                break;
+            case R.id.menu_search:
+                startActivity( new Intent( EditActivity.this, SearchActivity.class ) );
+                break;
+            default:
+                Log.e("Activity", "Default case accessed in onOptionsItemSelected()");
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
