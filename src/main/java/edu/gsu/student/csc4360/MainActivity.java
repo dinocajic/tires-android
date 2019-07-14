@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         this.init();
 
         //Re-Enable if not populated ------------------------------------------------------------------------------------
-        //Globals.db.populateTables();
-        //PopulateItems.populate();
+        Globals.db.populateTables();
+        PopulateItems.populate();
     }
 
     /**

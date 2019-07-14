@@ -1,6 +1,6 @@
 package edu.gsu.student.csc4360;
 
-public class Models {
+public class Model {
 
     private String name, details;
     private int    id, enabled;

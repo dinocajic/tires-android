@@ -8,8 +8,8 @@ public class Tire {
 
     private int id, productsId, imageId, latestCostId, latestPriceId;
 
-    private Brands brand;
-    private Models model;
+    private Brand brand;
+    private Model model;
 
     private String  part_number, width, aspect_ratio, construction, wheel_diameter, max_load, max_psi,
             ply, load_rating, speed_rating, weight, cost, sales_price, qty_per_unit, image;
@@ -34,11 +34,11 @@ public class Tire {
 
     public int getLatestSalesPriceId() { return latestPriceId; }
 
-    public Brands getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public Models getModel() {
+    public Model getModel() {
         return model;
     }
 
@@ -130,12 +130,12 @@ public class Tire {
 
     public void setLatestPriceId(int latestPriceId) { this.latestPriceId = latestPriceId; }
 
-    public boolean setBrand(Brands brand) {
+    public boolean setBrand(Brand brand) {
         this.brand = brand;
         return true;
     }
 
-    public boolean setModel(Models model) {
+    public boolean setModel(Model model) {
         this.model = model;
         return true;
     }

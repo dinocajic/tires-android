@@ -329,8 +329,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // -----------------------------------------------------------------------------------------
         String date_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
-        Brands brand = tire.getBrand();
-        Models model = tire.getModel();
+        Brand brand = tire.getBrand();
+        Model model = tire.getModel();
 
         // -----------------------------------------------------------------------------------------
         // Dino Cajic
@@ -412,8 +412,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void modifyProduct(Tire tire) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Brands brand = tire.getBrand();
-        Models model = tire.getModel();
+        Brand brand = tire.getBrand();
+        Model model = tire.getModel();
 
         ContentValues tireValues = new ContentValues();
         tireValues.put( TiresTable.PART_NUM,         tire.getPart_number());
@@ -464,6 +464,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues tireValues = new ContentValues();
         tireValues.put( TiresTable.COL_REMOVED_DATE, date_time);
+        tireValues.put( TiresTable.COL_REMOVED_DATE, date_time);
         db.update(TiresTable.TABLE, tireValues, TiresTable.COL_ID + "=" + tire.getId(), null);
 
         //db.execSQL("DELETE FROM " + TiresTable.TABLE + " WHERE " + TiresTable.COL_ID + " = " + product_id + ";");
@@ -474,7 +475,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public Brands getBrand(int id) {
+    public Brand getBrand(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + BrandsTable.TABLE + " WHERE " +
                 BrandsTable.COL_ID + " = " + id + ";", null);
@@ -485,7 +486,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.moveToFirst();
 
-        Brands brand = new Brands();
+        Brand brand = new Brand();
         brand.setName(queryCursor.getString(queryCursor.getColumnIndex(BrandsTable.COL_NAME)));
         brand.setDetails(queryCursor.getString(queryCursor.getColumnIndex(BrandsTable.COL_DETAILS)));
         brand.setEnabled(queryCursor.getInt(queryCursor.getColumnIndex(BrandsTable.COL_ENABLED)));
@@ -501,7 +502,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Retrieve Brand by name
      * ---------------------------------------------------------------------------------------------
      */
-    public Brands getBrand(String name) {
+    public Brand getBrand(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + BrandsTable.TABLE + " WHERE " +
                 BrandsTable.COL_NAME + " = '" + name + "';", null);
@@ -512,7 +513,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.moveToFirst();
 
-        Brands brand = new Brands();
+        Brand brand = new Brand();
         brand.setId(      queryCursor.getInt(    queryCursor.getColumnIndex( BrandsTable.COL_ID)));
         brand.setName(    queryCursor.getString( queryCursor.getColumnIndex( BrandsTable.COL_NAME)));
         brand.setDetails( queryCursor.getString( queryCursor.getColumnIndex( BrandsTable.COL_DETAILS)));
@@ -527,16 +528,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @return
      */
-    public Brands[] getBrands() {
+    public Brand[] getBrands() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + BrandsTable.TABLE + ";", null);
 
-        Brands[] brands = new Brands[queryCursor.getCount()];
+        Brand[] brands = new Brand[queryCursor.getCount()];
         int i = 0;
 
         queryCursor.moveToFirst();
         while (!queryCursor.isAfterLast()) {
-            Brands brand = new Brands();
+            Brand brand = new Brand();
             brand.setName(queryCursor.getString(queryCursor.getColumnIndex(BrandsTable.COL_NAME)));
             brand.setDetails(queryCursor.getString(queryCursor.getColumnIndex(BrandsTable.COL_DETAILS)));
             brand.setEnabled(queryCursor.getInt(queryCursor.getColumnIndex(BrandsTable.COL_ENABLED)));
@@ -555,7 +556,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public Models getModel(int id) {
+    public Model getModel(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + ModelsTable.TABLE + " WHERE " +
                 ModelsTable.COL_ID + " = " + id + ";", null);
@@ -566,7 +567,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.moveToFirst();
 
-        Models model = new Models();
+        Model model = new Model();
         model.setName(queryCursor.getString(queryCursor.getColumnIndex(ModelsTable.COL_NAME)));
         model.setDetails(queryCursor.getString(queryCursor.getColumnIndex(ModelsTable.COL_DETAILS)));
         model.setEnabled(queryCursor.getInt(queryCursor.getColumnIndex(ModelsTable.COL_ENABLED)));
@@ -582,7 +583,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Retrieve Model by name
      * ---------------------------------------------------------------------------------------------
      */
-    public Models getModel(String name) {
+    public Model getModel(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + ModelsTable.TABLE + " WHERE " +
                 ModelsTable.COL_NAME + " = '" + name + "';", null);
@@ -593,7 +594,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.moveToFirst();
 
-        Models model = new Models();
+        Model model = new Model();
         model.setId(      queryCursor.getInt(    queryCursor.getColumnIndex( ModelsTable.COL_ID)));
         model.setName(    queryCursor.getString( queryCursor.getColumnIndex( ModelsTable.COL_NAME)));
         model.setDetails( queryCursor.getString( queryCursor.getColumnIndex( ModelsTable.COL_DETAILS)));
@@ -608,16 +609,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @return
      */
-    public Models[] getModels() {
+    public Model[] getModels() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor queryCursor = db.rawQuery("SELECT * FROM " + ModelsTable.TABLE + ";", null);
 
-        Models[] models = new Models[queryCursor.getCount()];
+        Model[] models = new Model[queryCursor.getCount()];
         int i = 0;
 
         queryCursor.moveToFirst();
         while (!queryCursor.isAfterLast()) {
-            Models model = new Models();
+            Model model = new Model();
             model.setName(queryCursor.getString(queryCursor.getColumnIndex(ModelsTable.COL_NAME)));
             model.setDetails(queryCursor.getString(queryCursor.getColumnIndex(ModelsTable.COL_DETAILS)));
             model.setEnabled(queryCursor.getInt(queryCursor.getColumnIndex(ModelsTable.COL_ENABLED)));
@@ -705,12 +706,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         queryCursor.close();
 
-        Brands brand = getBrand(brandId);
+        Brand brand = getBrand(brandId);
         if (brand != null) {
             tire.setBrand(brand);
         }
 
-        Models model = getModel(modelId);
+        Model model = getModel(modelId);
         if (model != null) {
             tire.setModel(model);
         }

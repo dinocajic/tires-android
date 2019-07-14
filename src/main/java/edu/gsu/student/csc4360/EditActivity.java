@@ -148,18 +148,18 @@ public class EditActivity extends AppCompatActivity {
                 tire = new Tire();
                 tire.setId( populate_tire.getId() );
 
-                Brands brands = Globals.db.getBrand( brands_dropdown.getSelectedItem().toString() );
+                Brand brand = Globals.db.getBrand( brands_dropdown.getSelectedItem().toString() );
 
-                if ( !tire.setBrand( brands ) ) {
+                if ( !tire.setBrand(brand) ) {
                     Toast.makeText( getApplicationContext(),
                             "Brand must be selected from the dropdown",
                             Toast.LENGTH_LONG ).show();
                     return;
                 }
 
-                Models models = Globals.db.getModel( models_dropdown.getSelectedItem().toString() );
+                Model model = Globals.db.getModel( models_dropdown.getSelectedItem().toString() );
 
-                if ( !tire.setModel( models ) ) {
+                if ( !tire.setModel(model) ) {
                     Toast.makeText( getApplicationContext(),
                             "Model must be selected from the dropdown",
                             Toast.LENGTH_LONG ).show();
@@ -340,13 +340,13 @@ public class EditActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates the Brands Dropdown menu
+     * Creates the Brand Dropdown menu
      */
     private void createBrandsSpinner() {
         List<String> spinnerArray =  new ArrayList<>();
 
         // Grab the brands from the brands table and populate them
-        for ( Brands brand : Globals.db.getBrands() ) {
+        for ( Brand brand : Globals.db.getBrands() ) {
             spinnerArray.add( brand.getName() );
         }
 
@@ -359,13 +359,13 @@ public class EditActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates the Models Dropdown menu
+     * Creates the Model Dropdown menu
      */
     private void createModelsSpinner() {
         List<String> spinnerArray =  new ArrayList<>();
 
         // Grab the brands from the brands table and populate them
-        for ( Models model : Globals.db.getModels() ) {
+        for ( Model model : Globals.db.getModels() ) {
             spinnerArray.add( model.getName() );
         }
 

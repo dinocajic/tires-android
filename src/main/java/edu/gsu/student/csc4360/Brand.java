@@ -1,6 +1,6 @@
 package edu.gsu.student.csc4360;
 
-public class Brands {
+public class Brand {
 
     private String name, details;
     private int    id, enabled;
