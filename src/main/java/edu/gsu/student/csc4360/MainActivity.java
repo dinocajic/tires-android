@@ -5,10 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         this.init();
 
         //Re-Enable if not populated ------------------------------------------------------------------------------------
-        //Globals.db.populateTables();
-        //PopulateItems.populate();
+        Globals.db.populateTables();
+        PopulateItems.populate();
     }
 
     /**
