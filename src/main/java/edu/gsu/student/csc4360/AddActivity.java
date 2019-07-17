@@ -102,10 +102,8 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // TODO Reactivate when going to mobile
                 if ( imageUri == null ) {
                     Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
-                    //imageUri = Uri.parse("1234.jpg");
                     return;
                 }
 
@@ -265,8 +263,8 @@ public class AddActivity extends AppCompatActivity {
                     this.imageUri = selectedImage;
                     this.upload_image.setText( "Upload..." + selectedImage.toString().substring(0, 20) + "..." );
 
-                    // Testing
-                    // Log.e("Image URL", this.imageUri.toString());
+                    // For web-based
+                    this.imageUri = Uri.parse("https://mickeythompsontires.com/thumbs/light-truck-tires/baja-boss/mt-baja-boss-3q-700x700-q70.png");
                 } else {
                     Log.e("Image", "Not ok");
                 }
