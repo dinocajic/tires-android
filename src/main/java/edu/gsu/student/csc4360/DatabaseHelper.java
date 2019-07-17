@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         private static final String COL_ENABLED = "enabled";
     }
 
-    // May have to modify since images will be loaded from SD card
     private static final class ProductImagesTable {
         private static final String TABLE = "product_images";
         private static final String COL_ID = "id";
@@ -130,7 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.createBrandsTable(sqLiteDatabase);
         this.createModelsTable(sqLiteDatabase);
         this.createTireWarrantiesTable(sqLiteDatabase);
-        //this.populateTables();
     }
 
     private void createProductsTable(SQLiteDatabase sqLiteDatabase) {
@@ -275,10 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Dino Cajic
-     * Populated some of the tables
-     * ---------------------------------------------------------------------------------------------
+     * Populates the Brands and Models tables
      */
     public void populateTables() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -323,19 +318,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insert(Tire tire) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Added Time Stamp
-        // -----------------------------------------------------------------------------------------
         String date_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         Brand brand = tire.getBrand();
         Model model = tire.getModel();
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Added Created At and Removed At entries
-        // -----------------------------------------------------------------------------------------
         ContentValues tireValues = new ContentValues();
         tireValues.put( TiresTable.PART_NUM,         tire.getPart_number() );
         tireValues.put( TiresTable.COL_BRAND_ID,     brand.getId() );
@@ -362,21 +349,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         productImageValues.put( ProductImagesTable.COL_NAME,        tire.getImage() );
         db.insert( ProductImagesTable.TABLE, null, productImageValues );
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Added category id hardcoded as 1. Can be changed to retrieve content from categories
-        // table for tire.
-        // -----------------------------------------------------------------------------------------
         ContentValues productValues = new ContentValues();
         productValues.put( ProductsTable.COL_PRODUCT_ID,   tireId );
         productValues.put( ProductsTable.COL_QTY_PER_UNIT, tire.getQty_per_unit() );
         productValues.put( ProductsTable.COL_CAT_ID,       1 );
         long productsId = db.insert( ProductsTable.TABLE, null, productValues );
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Inserted from and to dates into costs table
-        // -----------------------------------------------------------------------------------------
         ContentValues productCostsValues = new ContentValues();
         productCostsValues.put( ProductCostsTable.COL_PROD_ID,   productsId );
         productCostsValues.put( ProductCostsTable.COL_COST,      tire.getCost() );
@@ -384,10 +362,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         productCostsValues.put( ProductCostsTable.COL_TO_DATE,   0 );
         long productCostsId = db.insert( ProductCostsTable.TABLE, null, productCostsValues );
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Inserted values into sales_prices table
-        // -----------------------------------------------------------------------------------------
         ContentValues productSalesPriceValues = new ContentValues();
         productSalesPriceValues.put( ProductSalesPricesTable.COL_PROD_ID,   productsId );
         productSalesPriceValues.put( ProductSalesPricesTable.COL_PRICE,     tire.getSales_price() );
@@ -396,10 +370,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         productSalesPriceValues.put( ProductSalesPricesTable.COL_TO_DATE,   0 );
         long productSalesPriceId = db.insert( ProductSalesPricesTable.TABLE, null, productSalesPriceValues );
 
-        // -----------------------------------------------------------------------------------------
-        // Dino Cajic
-        // Added Latest Price to products table
-        // -----------------------------------------------------------------------------------------
         productValues.put( ProductsTable.COL_LATEST_COST,  productCostsId );
         productValues.put( ProductsTable.COL_LATEST_PRICE, productSalesPriceId );
         db.update(ProductsTable.TABLE, productValues, ProductsTable.COL_ID + "=" + productsId, null);
@@ -497,10 +467,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Dino Cajic
-     * Retrieve Brand by name
-     * ---------------------------------------------------------------------------------------------
+     * Returns a brand by name
+     *
+     * @param name
+     * @return
      */
     public Brand getBrand(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -578,10 +548,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Dino Cajic
-     * Retrieve Model by name
-     * ---------------------------------------------------------------------------------------------
+     *
+     * @param name
+     * @return
      */
     public Model getModel(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -786,10 +755,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         queryCursor.moveToFirst();
 
         while (!queryCursor.isAfterLast()) {
-            // -----------------------------------------------------------------------------------------
-            // Dino Cajic
-            // Removed redundancy. Code to retrieve tire is already done in getProductByPartNumber()
-            // -----------------------------------------------------------------------------------------
             Tire tire = this.getProductByPartNumber( queryCursor.getString( queryCursor.getColumnIndex( TiresTable.PART_NUM)));
 
             tires[i] = tire;
