@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -43,6 +45,8 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PrefManager.loadPreferences(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
@@ -100,9 +104,9 @@ public class AddActivity extends AppCompatActivity {
 
                 // TODO Reactivate when going to mobile
                 if ( imageUri == null ) {
-                    //Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
-                    imageUri = Uri.parse("1234.jpg");
-                    //return;
+                    Toast.makeText(getApplicationContext(), "Must Select Image", Toast.LENGTH_SHORT).show();
+                    //imageUri = Uri.parse("1234.jpg");
+                    return;
                 }
 
                 tire = new Tire();
@@ -260,6 +264,9 @@ public class AddActivity extends AppCompatActivity {
 
                     this.imageUri = selectedImage;
                     this.upload_image.setText( "Upload..." + selectedImage.toString().substring(0, 20) + "..." );
+
+                    // Testing
+                    // Log.e("Image URL", this.imageUri.toString());
                 } else {
                     Log.e("Image", "Not ok");
                 }
@@ -355,6 +362,11 @@ public class AddActivity extends AppCompatActivity {
                 break;
             case R.id.menu_search:
                 startActivity( new Intent( AddActivity.this, SearchActivity.class ) );
+                break;
+            case R.id.settings:
+                finish();
+                startActivity( new Intent(AddActivity.this, SettingsActivity.class )
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) );
                 break;
             default:
                 Log.e("Activity", "Default case accessed in onOptionsItemSelected()");

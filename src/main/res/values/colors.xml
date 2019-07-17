@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#1B1B1B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="spinner_color">#FFFFFF</color>
+
+    <color name="colorLight">#FF5722</color>
+    <color name="colorPrimaryLight">#FF9800</color>
+    <color name="colorLightAccent">#D81B60</color>
 </resources>

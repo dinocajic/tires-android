@@ -93,4 +93,10 @@
 
     <!-- Menu ################################################################################## -->
     <string name="help">Help</string>
+    <string name="settings">Settings</string>
+
+    <!-- Settings Activity ##################################################################### -->
+    <string name="settings_switch_text">Turn on Orange Theme</string>
+
+
 </resources>

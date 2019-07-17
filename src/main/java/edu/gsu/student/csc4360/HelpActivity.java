@@ -2,29 +2,21 @@ package edu.gsu.student.csc4360;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PrefManager.loadPreferences(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
     }
@@ -59,6 +51,11 @@ public class HelpActivity extends AppCompatActivity {
                 break;
             case R.id.menu_search:
                 startActivity( new Intent( HelpActivity.this, SearchActivity.class ) );
+                break;
+            case R.id.settings:
+                finish();
+                startActivity( new Intent(HelpActivity.this, SettingsActivity.class )
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) );
                 break;
             default:
                 Log.e("Activity", "Default case accessed in onOptionsItemSelected()");

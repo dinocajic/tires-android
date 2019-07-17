@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -45,6 +47,8 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PrefManager.loadPreferences(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
@@ -305,7 +309,7 @@ public class EditActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent searchIntent = new Intent( EditActivity.this, SearchActivity.class );
+                        Intent searchIntent = new Intent( EditActivity.this, MainActivity.class );
                         searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity( searchIntent );
                     }
@@ -433,6 +437,10 @@ public class EditActivity extends AppCompatActivity {
                 break;
             case R.id.menu_search:
                 startActivity( new Intent( EditActivity.this, SearchActivity.class ) );
+                break;
+            case R.id.settings:
+                startActivity( new Intent(EditActivity.this, SettingsActivity.class )
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) );
                 break;
             default:
                 Log.e("Activity", "Default case accessed in onOptionsItemSelected()");

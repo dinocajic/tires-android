@@ -736,6 +736,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return
      */
     public Tire[] getProducts(String searchParam) {
+        if ( searchParam.equals("All") ) {
+            return this.getAllProducts();
+        }
+
         String[] parameters = searchParam.split("/|R");
 
         if (parameters.length != 3) {
@@ -747,6 +751,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TiresTable.COL_WIDTH        + " = '" + parameters[0] + "' AND " +
                 TiresTable.COL_ASPECT_RATIO + " = '" + parameters[1] + "' AND " +
                 TiresTable.COL_RIM_DIAM     + " = '" + parameters[2] + "' AND " +
+                TiresTable.COL_REMOVED_DATE + " = '0';", null);
+
+        Tire[] tires = new Tire[queryCursor.getCount()];
+        int i = 0;
+
+        queryCursor.moveToFirst();
+
+        while (!queryCursor.isAfterLast()) {
+            Tire tire = this.getProductByPartNumber( queryCursor.getString( queryCursor.getColumnIndex( TiresTable.PART_NUM)));
+
+            tires[i] = tire;
+            i++;
+
+            queryCursor.moveToNext();
+        }
+
+        queryCursor.close();
+
+        return tires;
+    }
+
+    public Tire[] getAllProducts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor queryCursor = db.rawQuery("SELECT * FROM " + TiresTable.TABLE + " WHERE " +
                 TiresTable.COL_REMOVED_DATE + " = '0';", null);
 
         Tire[] tires = new Tire[queryCursor.getCount()];

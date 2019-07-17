@@ -1,11 +1,14 @@
 package edu.gsu.student.csc4360;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+// TODO - Change all Toasts to Snackbars
+
 public class MainActivity extends AppCompatActivity {
 
     private Button    add, search;
@@ -21,15 +26,18 @@ public class MainActivity extends AppCompatActivity {
     private String    banner_uri = "http://mickeythompsontires.com";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        PrefManager.loadPreferences(this);
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         this.init();
 
         //Re-Enable if not populated ------------------------------------------------------------------------------------
-        Globals.db.populateTables();
-        PopulateItems.populate();
+        //Globals.db.populateTables();
+        //PopulateItems.populate();
     }
 
     /**
@@ -113,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_search:
                 intent = new Intent( MainActivity.this, SearchActivity.class );
+                break;
+            case R.id.settings:
+                finish();
+                intent = new Intent( MainActivity.this, SettingsActivity.class )
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             default:
                 Log.e("Activity", "Default case accessed in onOptionsItemSelected()");

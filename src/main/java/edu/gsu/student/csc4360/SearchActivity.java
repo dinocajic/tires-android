@@ -2,7 +2,9 @@ package edu.gsu.student.csc4360;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +29,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PrefManager.loadPreferences(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -51,6 +55,8 @@ public class SearchActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT ).show();
                     return;
                 }
+
+                tires.clear();
 
                 for ( Tire t : global_tires ) {
                     tires.add(t);
@@ -115,6 +121,11 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             case R.id.menu_add_new_item:
                 startActivity( new Intent( SearchActivity.this, AddActivity.class ) );
+                break;
+            case R.id.settings:
+                finish();
+                startActivity( new Intent(SearchActivity.this, SettingsActivity.class )
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK) );
                 break;
             default:
                 Log.e("Activity", "Default case accessed in onOptionsItemSelected()");
